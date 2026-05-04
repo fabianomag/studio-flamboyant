@@ -138,14 +138,12 @@ export function ContactShowcase({
               <h1
                 className={
                   isPanel
-                    ? (splitAccentVariants.contactPanel ??
-                      "font-display uppercase leading-[0.78] tracking-[-0.08em] text-ambient-dark text-[16vw] sm:text-[5.2rem] xl:text-[6.4rem]")
-                    : (splitAccentVariants.contactPage ??
-                      "font-display uppercase leading-[0.78] tracking-[-0.08em] text-ambient-dark text-[22vw] sm:text-[14vw] lg:text-[9rem]")
+                    ? "font-display uppercase leading-[0.78] tracking-[-0.08em] text-ambient-dark text-[16vw] sm:text-[5.2rem] xl:text-[6.4rem]"
+                    : "font-display uppercase leading-[0.78] tracking-[-0.08em] text-ambient-dark text-[22vw] sm:text-[14vw] lg:text-[9rem]"
                 }
               >
                 {t.titleTop}
-                <span className={splitAccentVariants.accentWord ?? "block italic text-ambient-electric"}>{t.titleBottom}</span>
+                <span className="block italic text-ambient-electric">{t.titleBottom}</span>
               </h1>
             </>,
             animated,
@@ -155,10 +153,8 @@ export function ContactShowcase({
             <p
               className={`border-l border-ambient-stone text-ambient-canyon/82 ${
                 isPanel
-                  ? (pageLeadVariants.contactPanel ??
-                    "mt-7 max-w-[48rem] pl-6 text-[1rem] leading-relaxed sm:text-[1.12rem] xl:text-[1.2rem]")
-                  : (pageLeadVariants.contactPage ??
-                    "mt-10 max-w-2xl pl-8 text-xl leading-relaxed sm:text-2xl")
+                  ? "mt-7 max-w-[48rem] pl-6 text-[1rem] leading-relaxed sm:text-[1.12rem] xl:text-[1.2rem]"
+                  : "mt-10 max-w-2xl pl-8 text-xl leading-relaxed sm:text-2xl"
               }`}
             >
               {t.intro}
