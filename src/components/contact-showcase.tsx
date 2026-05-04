@@ -3,10 +3,9 @@
 import type { ReactNode } from "react";
 import siteConfig from "@/lib/metadata";
 import { type Lang } from "@/lib/i18n";
-import { typographyTokenMap } from "@/lib/typography-system";
+import Image from "next/image";
 import { Reveal } from "@/components/reveal";
 import { ContactActionRows } from "@/components/contact-action-rows";
-import { AnimatedBlobImage } from "@/components/ui/animated-blob-image";
 
 const copy = {
   pt: {
@@ -48,11 +47,7 @@ function maybeReveal(children: ReactNode, animated: boolean, delay = 0) {
   return <Reveal delay={delay}>{children}</Reveal>;
 }
 
-const splitAccentVariants = typographyTokenMap.displaySplitAccent.variants ?? {};
-const pageLeadVariants = typographyTokenMap.pageLead.variants ?? {};
-const pageEyebrowClass =
-  typographyTokenMap.pageEyebrow.className ??
-  "text-label uppercase text-ambient-canyon/55";
+const pageEyebrowClass = "text-label uppercase text-ambient-canyon/55";
 
 export function ContactShowcase({
   lang,
@@ -119,11 +114,12 @@ export function ContactShowcase({
             <div className="pointer-events-none absolute -left-4 top-[8%] h-32 w-32 rounded-full bg-ambient-electric/10 blur-3xl" />
             <div className="pointer-events-none absolute -right-6 bottom-[12%] h-28 w-28 rounded-full bg-white/80 blur-2xl" />
             <div className="pointer-events-none absolute left-[14%] top-[4%] h-[86%] w-[72%] rounded-[42%_58%_49%_51%/56%_42%_58%_44%] border border-white/45" />
-            <AnimatedBlobImage
-              src="/images/julia-portrait.png"
+            <Image
+              src="/images/julia-office.webp"
               alt="Julia Fonseca"
-              className="mx-auto max-w-[28rem] drop-shadow-[0_30px_60px_rgba(17,25,40,0.16)]"
-              imageClassName="object-cover object-center"
+              width={448}
+              height={560}
+              className="mx-auto max-w-[28rem] rounded-[42%_58%_49%_51%/56%_42%_58%_44%] object-cover object-center drop-shadow-[0_30px_60px_rgba(17,25,40,0.16)]"
             />
           </div>
         </div>
