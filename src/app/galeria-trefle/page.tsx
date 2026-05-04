@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { resolveLang, withLang } from "@/lib/i18n";
+import { typographyTokenMap } from "@/lib/typography-system";
 
 export const metadata: Metadata = {
   title: "Galeria Tréfle",
@@ -21,6 +22,7 @@ const copy = {
     placeholderText:
       "As coleções, artistas e peças selecionadas serão inseridas aqui em fases, mantendo a mesma lógica editorial do restante do site.",
     cards: ["Seleção 01", "Seleção 02", "Seleção 03"],
+    cardStatus: "Curadoria em breve",
     instagram: "Instagram da galeria",
     contact: "Falar com o escritório",
   },
@@ -35,6 +37,7 @@ const copy = {
     placeholderText:
       "Collections, artists and selected pieces will be added here in stages while preserving the same editorial language used across the website.",
     cards: ["Selection 01", "Selection 02", "Selection 03"],
+    cardStatus: "Curation soon",
     instagram: "Gallery Instagram",
     contact: "Talk to the studio",
   },
@@ -47,6 +50,10 @@ export default function GaleriaTreflePage({
 }) {
   const lang = resolveLang(searchParams?.lang);
   const t = copy[lang];
+  const pageLeadVariants = typographyTokenMap.pageLead.variants ?? {};
+  const pageEyebrowClass =
+    typographyTokenMap.pageEyebrow.className ??
+    "text-label uppercase text-ambient-canyon/55";
 
   return (
     <div className="min-h-screen bg-ambient-micro text-ambient-dark">
@@ -55,13 +62,13 @@ export default function GaleriaTreflePage({
           <div className="max-w-[34rem]">
             <div className="mb-8 flex items-center gap-5">
               <span className="block h-14 w-[2px] bg-[#6C7B8B]" />
-              <p className="text-label text-ambient-muted">{t.eyebrow}</p>
+              <p className={pageEyebrowClass}>{t.eyebrow}</p>
             </div>
 
             <h1 className="font-display text-[3.5rem] uppercase leading-[0.82] tracking-[0.04em] text-ambient-dark sm:text-[4.5rem] lg:text-[5.5rem]">
               {t.title}
             </h1>
-            <p className="mt-6 font-serif text-[1.18rem] leading-[1.9] text-ambient-dark/76">
+            <p className={pageLeadVariants.galleryPageIntro ?? "mt-6 font-serif text-[1.18rem] leading-[1.9] text-ambient-dark/76"}>
               {t.intro}
             </p>
 
@@ -105,7 +112,7 @@ export default function GaleriaTreflePage({
           </div>
 
           <div className="space-y-8 border-l border-ambient-stone/80 pl-8">
-            <p className="font-serif text-[1.18rem] leading-[1.9] text-ambient-dark/76">{t.body}</p>
+            <p className={pageLeadVariants.galleryPageBody ?? "font-serif text-[1.18rem] leading-[1.9] text-ambient-dark/76"}>{t.body}</p>
             <p className="text-[0.95rem] uppercase tracking-[0.16em] text-ambient-muted/86">{t.placeholderText}</p>
           </div>
         </div>
@@ -124,7 +131,7 @@ export default function GaleriaTreflePage({
                   {card}
                 </h2>
                 <p className="mt-4 text-[0.9rem] uppercase tracking-[0.16em] text-ambient-muted/80">
-                  Placeholder
+                  {t.cardStatus}
                 </p>
               </div>
             </article>

@@ -50,8 +50,8 @@ export function CustomCursor() {
         y: mousePosition.y - 16,
         scale: isHovering ? 2.5 : 1,
         backgroundColor: isHovering
-          ? "#a86d5acc" // ambient-electric
-          : "#a86d5a1a",
+          ? "#1d4f5fcc"
+          : "#1d4f5f1a",
       }}
       transition={{
         type: "spring",

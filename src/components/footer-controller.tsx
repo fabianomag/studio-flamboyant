@@ -13,6 +13,8 @@ export function FooterController() {
   const lang = resolveLang(searchParams.get("lang"));
   const currentHref = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
 
+  if (pathname === "/") return null;
+
   if (projectDetailPattern.test(pathname)) {
     return <ProjectDetailFooter lang={lang} />;
   }

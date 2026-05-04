@@ -42,7 +42,8 @@ export function OrganizationJsonLd() {
       },
     ],
     sameAs: [siteConfig.instagram],
-    image: `${siteConfig.url}/og-image.jpg`,
+    logo: `${siteConfig.url}/images/brand/jf-arquitetura-original.png`,
+    image: `${siteConfig.url}/opengraph-image`,
     priceRange: "$$$$",
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",

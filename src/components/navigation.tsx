@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { clsx } from "clsx";
-import { Search } from "lucide-react";
 import { BrandMark } from "./brand-mark";
 import { FlipLink } from "@/components/ui/flip-links";
 import { resolveLang, withLang } from "@/lib/i18n";
@@ -169,6 +168,7 @@ export function Navigation() {
     setIsOpen((value) => !value);
   }, []);
   const isProjectsPage = pathname === "/projetos";
+  const isHomePage = pathname === "/" || pathname === "";
 
   const switchLang = (nextLang: "pt" | "en") => {
     const params = new URLSearchParams(searchParams.toString());
@@ -182,77 +182,67 @@ export function Navigation() {
     <>
       <header
         className={clsx(
-          "fixed left-0 right-0 top-0 z-[90] transition-all duration-700",
+          "fixed left-0 right-0 top-0 z-[100] transition-all duration-700",
           isOpen ? " text-white" : scrolled ? "bg-white/98 shadow-sm backdrop-blur-xl" : "bg-transparent"
         )}
       >
-        <nav className="section-padding flex items-start justify-between py-6 md:py-7">
-          <div className={clsx("relative z-[60] hidden transition-opacity duration-300 lg:block")}>
-            {isOpen ? <BrandMark inverted lang={lang} /> : <BrandMark lang={lang} />}
+        <nav className="section-padding flex items-center justify-between py-6 md:py-7">
+          {/* Logo: no desktop aparece em todas as páginas; no mobile some na homepage */}
+          <div
+            className={clsx(
+              "relative z-[100] transition-opacity duration-300",
+              isHomePage ? "hidden lg:block lg:-ml-10" : "block lg:-ml-10"
+            )}
+          >
+            {isOpen ? <BrandMark inverted lang={lang} variant="jf-original" /> : <BrandMark lang={lang} variant="jf-original" />}
           </div>
 
-          <div className="relative z-[60] flex flex-col items-end">
-            <div className="flex items-center gap-2">
-              {isProjectsPage && (
-                <button
-                  type="button"
-                  className={clsx(
-                    "group flex h-12 w-12 items-center justify-center transition-all duration-300",
-                    isOpen
-                      ? "hidden"
-                      : "border border-ambient-stone text-ambient-dark/85 hover:border-ambient-wood hover:text-ambient-wood"
-                  )}
-                  aria-label={labels.search}
-                >
-                  <Search size={22} strokeWidth={1.5} />
-                </button>
+          {/* Placeholder invisível na homepage mobile para manter burger à direita */}
+          {isHomePage && <div className="lg:hidden" />}
+
+          <div className="relative z-[100]">
+            <button
+              type="button"
+              onClick={toggleMenu}
+              className={clsx(
+                "group flex h-12 w-12 items-center justify-center border transition-all duration-300",
+                isOpen
+                  ? "border-white/50 bg-transparent text-white"
+                  : isHomePage
+                    ? "border-white/50 text-white hover:border-white hover:text-white"
+                    : "border-ambient-stone text-ambient-dark hover:border-ambient-cyan hover:text-ambient-cyan"
               )}
-              <button
-                type="button"
-                onClick={toggleMenu}
-                className={clsx(
-                  "group ml-2 flex h-12 w-12 items-center justify-center border transition-all duration-300",
-                  isOpen
-                    ? "border-ambient-wood bg-ambient-dark text-ambient-wood"
-                    : "border-ambient-stone text-ambient-dark hover:border-ambient-wood hover:text-ambient-wood"
-                )}
-                aria-label={isOpen ? labels.close : labels.open}
-              >
-                {isOpen ? (
-                  <span className="relative block h-5 w-5">
-                    <span className="absolute left-0 top-1/2 block h-px w-full -translate-y-1/2 rotate-45 bg-current" />
-                    <span className="absolute left-0 top-1/2 block h-px w-full -translate-y-1/2 -rotate-45 bg-current" />
-                  </span>
-                ) : (
-                  <span className="flex flex-col gap-[5px]">
-                    <span className="block h-px w-5 bg-current" />
-                    <span className="block h-px w-5 bg-current" />
-                    <span className="block h-px w-5 bg-current" />
-                  </span>
-                )}
-              </button>
-            </div>
-            {isProjectsPage && !isOpen && (
-              <span className="mt-1 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-ambient-dark/80">
-                {labels.projectsLabel}
-              </span>
-            )}
+              aria-label={isOpen ? labels.close : labels.open}
+            >
+              {isOpen ? (
+                <span className="relative block h-5 w-5">
+                  <span className="absolute left-0 top-1/2 block h-px w-full -translate-y-1/2 rotate-45 bg-current" />
+                  <span className="absolute left-0 top-1/2 block h-px w-full -translate-y-1/2 -rotate-45 bg-current" />
+                </span>
+              ) : (
+                <span className="flex flex-col gap-[5px]">
+                  <span className="block h-px w-5 bg-current" />
+                  <span className="block h-px w-5 bg-current" />
+                  <span className="block h-px w-5 bg-current" />
+                </span>
+              )}
+            </button>
           </div>
         </nav>
       </header>
 
       <div
         className={clsx(
-          "fixed inset-0 z-[80] overflow-hidden bg-ambient-dark text-white transition-all duration-500",
+          "fixed inset-0 z-[95] overflow-hidden bg-ambient-dark text-white transition-all duration-500",
           isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         )}
         onClick={close}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(0,255,255,0.08),_transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(115,189,213,0.08),_transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))]" />
 
         <div
           className={clsx(
-            "relative z-10 flex h-full flex-col section-padding pb-28 pt-28 transition-all duration-500 ease-out md:pb-32 md:pt-32",
+            "relative z-10 flex h-full flex-col section-padding pb-28 pt-36 transition-all duration-500 ease-out md:pb-32 md:pt-40",
             isOpen ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           )}
           onClick={(event) => event.stopPropagation()}
@@ -268,8 +258,8 @@ export function Navigation() {
                       label={projectsLink.label}
                       onClick={close}
                       className="max-w-full"
-                      textClassName="font-display text-[3.7rem] font-[900] uppercase tracking-[-0.055em] text-white sm:text-[4.4rem] md:text-[5.8rem] lg:text-[6.8rem] xl:text-[7.8rem]"
-                      hoverTextClassName="font-display text-[3.7rem] font-[900] uppercase tracking-[-0.055em] text-ambient-wood sm:text-[4.4rem] md:text-[5.8rem] lg:text-[6.8rem] xl:text-[7.8rem]"
+                      textClassName="font-display text-[2.8rem] font-[900] uppercase tracking-[-0.055em] text-white sm:text-[3.3rem] md:text-[4.2rem] lg:text-[5rem] xl:text-[5.8rem]"
+                      hoverTextClassName="font-display text-[2.8rem] font-[900] uppercase tracking-[-0.055em] text-ambient-cyan sm:text-[3.3rem] md:text-[4.2rem] lg:text-[5rem] xl:text-[5.8rem]"
                     />
                   </div>
 
@@ -295,10 +285,10 @@ export function Navigation() {
                     onClick={close}
                     className="max-w-full"
                     textClassName={clsx(
-                      "font-display text-[3.35rem] font-[900] uppercase tracking-[-0.055em] text-white sm:text-[4rem] md:text-[5.15rem] lg:text-[6.2rem] xl:text-[7.1rem]",
+                      "font-display text-[2.5rem] font-[900] uppercase tracking-[-0.055em] text-white sm:text-[3rem] md:text-[3.8rem] lg:text-[4.6rem] xl:text-[5.3rem]",
                       matchesMenuHref(pathname, searchKey, link.href) ? "text-white" : "text-white/94"
                     )}
-                    hoverTextClassName="font-display text-[3.35rem] font-[900] uppercase tracking-[-0.055em] text-ambient-wood sm:text-[4rem] md:text-[5.15rem] lg:text-[6.2rem] xl:text-[7.1rem]"
+                    hoverTextClassName="font-display text-[2.5rem] font-[900] uppercase tracking-[-0.055em] text-ambient-cyan sm:text-[3rem] md:text-[3.8rem] lg:text-[4.6rem] xl:text-[5.3rem]"
                   />
                 ))}
               </div>
@@ -311,7 +301,7 @@ export function Navigation() {
                 <button
                   type="button"
                   onClick={() => switchLang("pt")}
-                  className={clsx("transition-colors", lang === "pt" ? "text-white" : "hover:text-ambient-wood")}
+                  className={clsx("transition-colors", lang === "pt" ? "text-white" : "hover:text-ambient-cyan")}
                 >
                   PT
                 </button>
@@ -319,7 +309,7 @@ export function Navigation() {
                 <button
                   type="button"
                   onClick={() => switchLang("en")}
-                  className={clsx("transition-colors", lang === "en" ? "text-white" : "hover:text-ambient-wood")}
+                  className={clsx("transition-colors", lang === "en" ? "text-white" : "hover:text-ambient-cyan")}
                 >
                   EN
                 </button>

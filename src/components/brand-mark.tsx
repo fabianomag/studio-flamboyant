@@ -1,15 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { clsx } from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { withLang, type Lang } from "@/lib/i18n";
+import { setPendingRouteShellTransition } from "@/lib/route-shell-transition";
 
-export type LogoVariant = "jf-arq" | "julia-square" | "jf-square" | "j-symbol-f" | "julia-jacobsen" | "jf-star-side" | "juf-arq-ta" | "jf-classic";
+export type LogoVariant = "jf-original" | "jf-arq" | "julia-square" | "jf-square" | "j-symbol-f" | "julia-jacobsen" | "jf-star-side" | "juf-arq-ta" | "jf-classic";
 
 const BRAND_STORAGE_KEY = "julia-brand-variant";
-const logoVariants: LogoVariant[] = ["jf-star-side", "julia-jacobsen", "juf-arq-ta", "jf-classic", "jf-arq", "julia-square"];
+const logoVariants: LogoVariant[] = ["jf-original", "jf-star-side", "julia-jacobsen", "juf-arq-ta", "jf-classic", "jf-arq", "julia-square"];
 
 interface BrandMarkProps {
   inverted?: boolean;
@@ -19,7 +21,7 @@ interface BrandMarkProps {
 }
 
 function resolveLogoVariant(value?: string | null): LogoVariant {
-  return logoVariants.includes(value as LogoVariant) ? (value as LogoVariant) : "jf-star-side";
+  return logoVariants.includes(value as LogoVariant) ? (value as LogoVariant) : "jf-original";
 }
 
 function BrandSymbol({ compact = false }: { compact?: boolean }) {
@@ -91,11 +93,7 @@ export function JacobsenStar({ className }: { className?: string }) {
       */}
       <path
         d="M50 0 L52 20 L68 7 L65 27 L85 20 L75 38 L96 40 L80 50 L96 60 L75 62 L85 80 L65 73 L68 93 L52 80 L50 100 L48 80 L32 93 L35 73 L15 80 L25 62 L4 60 L20 50 L4 40 L25 38 L15 20 L35 27 L32 7 L48 20 Z"
-        fill="#d9ff4f"
-      />
-      <path
-        d="M50 0 L52 20 L68 7 L65 27 L85 20 L75 38 L96 40 L80 50 L96 60 L75 62 L85 80 L65 73 L68 93 L52 80 L50 100 L48 80 L32 93 L35 73 L15 80 L25 62 L4 60 L20 50 L4 40 L25 38 L15 20 L35 27 L32 7 L48 20 Z"
-        fill="#d9ff4f"
+        fill="currentColor"
       />
     </svg>
   );
@@ -119,6 +117,24 @@ function BrandWordmark({
   const symbolWrapClass = large ? "ml-[0.1em]" : "ml-[0.08em]";
 
   switch (variant) {
+    case "jf-original":
+      return (
+        <span className={clsx("relative block", large ? "h-[4.8rem] w-[15.1rem]" : "h-[4.8rem] w-[15.1rem]")}>
+          <Image
+            src="/images/brand/jf-arquitetura-original.png"
+            alt="JF Arquitetura"
+            fill
+            sizes={large ? "15.1rem" : "15.1rem"}
+            className={clsx(
+              "object-contain object-left",
+              inverted
+                ? "brightness-0 invert drop-shadow-[0_0_16px_rgba(255,255,255,0.22)]"
+                : "brightness-0 [filter:brightness(0)_saturate(100%)_invert(22%)_sepia(29%)_saturate(1078%)_hue-rotate(151deg)_brightness(94%)_contrast(90%)_drop-shadow(0_0_10px_rgba(29,79,95,0.12))]"
+            )}
+            priority={large}
+          />
+        </span>
+      );
     case "jf-arq":
       return (
         <span className={clsx("inline-flex items-start gap-[0.14em]", inverted ? "text-white" : "text-ambient-dark")}>
@@ -211,7 +227,7 @@ function BrandWordmark({
 
 function useBrandVariant(variantOverride?: LogoVariant) {
   const searchParams = useSearchParams();
-  const [storedVariant, setStoredVariant] = useState<LogoVariant>(variantOverride ?? "jf-star-side");
+  const [storedVariant, setStoredVariant] = useState<LogoVariant>(variantOverride ?? "jf-original");
 
   useEffect(() => {
     if (variantOverride) {
@@ -238,10 +254,16 @@ function useBrandVariant(variantOverride?: LogoVariant) {
 
 export function BrandMark({ inverted = false, large = false, lang = "pt", variant }: BrandMarkProps) {
   const activeVariant = useBrandVariant(variant);
+  const pathname = usePathname();
 
   return (
     <Link
       href={withLang("/", lang)}
+      onClick={() => {
+        if (pathname !== "/") {
+          setPendingRouteShellTransition("home-enter");
+        }
+      }}
       className="inline-flex"
       aria-label="Julia Fonseca Arquitetura"
     >

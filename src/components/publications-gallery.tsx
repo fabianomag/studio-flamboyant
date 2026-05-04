@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { clsx } from "clsx";
 import { withLang, type Lang } from "@/lib/i18n";
+import { typographyTokenMap } from "@/lib/typography-system";
 
 type PublicationType = "studio" | "midia" | "referencias";
 
@@ -19,6 +20,7 @@ export interface PublicationItem {
 
 const copy = {
   pt: {
+    eyebrow: "Publicações",
     intro:
       "Veja os cadernos do estúdio, as publicações na mídia e as referências que ajudam a ampliar a presença do escritório.",
     filters: {
@@ -31,6 +33,7 @@ const copy = {
     studioTitle: "Studio Notes",
   },
   en: {
+    eyebrow: "Publications",
     intro:
       "Browse studio notebooks, media features and reference publications that expand the studio presence.",
     filters: {
@@ -54,6 +57,10 @@ export function PublicationsGallery({
   initialType?: PublicationType;
 }) {
   const labels = copy[lang];
+  const pageLeadVariants = typographyTokenMap.pageLead.variants ?? {};
+  const pageEyebrowClass =
+    typographyTokenMap.pageEyebrow.className ??
+    "text-label uppercase text-ambient-canyon/55";
   const [activeType, setActiveType] = useState<PublicationType>(initialType);
 
   const filtered = useMemo(
@@ -65,8 +72,13 @@ export function PublicationsGallery({
     <>
       <section className="section-padding pb-20 pt-44 md:pb-24 md:pt-48">
         <div className="mx-auto max-w-[68rem]">
+          <div className="mb-12 flex flex-col items-center gap-5">
+            <span className="accent-line block h-12 w-[2px]" />
+            <p className={pageEyebrowClass}>{labels.eyebrow}</p>
+          </div>
+
           <div className="mx-auto max-w-4xl">
-            <p className="quiet-serif text-center">{labels.intro}</p>
+            <p className={pageLeadVariants.publicationsIndexIntro ?? "quiet-serif text-center"}>{labels.intro}</p>
           </div>
         </div>
       </section>

@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion, useScroll, useTransform, type PanInfo } from "framer-motion";
 import type { Project } from "@/lib/projects";
 import { withLang, type Lang } from "@/lib/i18n";
-import { BrandMark } from "./brand-mark";
+import { getImageBlurDataURL } from "@/lib/image-placeholder";
 
 export function FeaturedProjectShowcase({
   projects,
@@ -16,202 +16,220 @@ export function FeaturedProjectShowcase({
   lang: Lang;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const imageRef = useRef<HTMLDivElement | null>(null);
+
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: imageRef,
     offset: ["start end", "end start"],
   });
-  const cardY = useTransform(scrollYProgress, [0, 1], [72, -72]);
-  const brandY = useTransform(scrollYProgress, [0, 1], [48, -64]);
+  // Parallax suave na foto — imagem se move menos que o scroll
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  if (projects.length === 0) {
-    return null;
-  }
+  const pausedRef = useRef(false);
+  const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  if (projects.length === 0) return null;
 
   const activeProject = projects[activeIndex];
 
-  const moveTo = (nextIndex: number) => {
-    const normalizedIndex = (nextIndex + projects.length) % projects.length;
-    if (normalizedIndex === activeIndex) {
-      return;
-    }
-
-    const delta =
-      normalizedIndex > activeIndex ||
-      (activeIndex === projects.length - 1 && normalizedIndex === 0)
-        ? 1
-        : -1;
-
-    setDirection(delta);
-    setActiveIndex(normalizedIndex);
-  };
-
-  const paginate = (step: number) => {
+  const paginate = useCallback((step: number) => {
     setDirection(step);
     setActiveIndex((current) => (current + step + projects.length) % projects.length);
+  }, [projects.length]);
+
+  const moveTo = (nextIndex: number) => {
+    const normalizedIndex = (nextIndex + projects.length) % projects.length;
+    if (normalizedIndex === activeIndex) return;
+    const delta =
+      normalizedIndex > activeIndex ||
+      (activeIndex === projects.length - 1 && normalizedIndex === 0) ? 1 : -1;
+    setDirection(delta);
+    setActiveIndex(normalizedIndex);
+    pausedRef.current = true;
+    setTimeout(() => { pausedRef.current = false; }, 10000);
   };
+
+  const resetAutoplay = useCallback(() => {
+    if (autoplayRef.current) clearInterval(autoplayRef.current);
+    autoplayRef.current = setInterval(() => {
+      if (!pausedRef.current) paginate(1);
+    }, 5000);
+  }, [paginate]);
+
+  useEffect(() => {
+    resetAutoplay();
+    return () => { if (autoplayRef.current) clearInterval(autoplayRef.current); };
+  }, [resetAutoplay]);
 
   const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipePower = Math.abs(info.offset.x) * Math.sign(info.offset.x) + info.velocity.x * 16;
-
-    if (swipePower <= -140) {
-      paginate(1);
-    } else if (swipePower >= 140) {
-      paginate(-1);
+    if (swipePower <= -140 || swipePower >= 140) {
+      pausedRef.current = true;
+      setTimeout(() => { pausedRef.current = false; }, 10000);
     }
+    if (swipePower <= -140) paginate(1);
+    else if (swipePower >= 140) paginate(-1);
   };
 
   const imageVariants = {
-    enter: (customDirection: number) => ({
-      opacity: 0,
-      x: customDirection >= 0 ? 56 : -56,
-      scale: 1.02,
-    }),
-    center: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-    },
-    exit: (customDirection: number) => ({
-      opacity: 0,
-      x: customDirection >= 0 ? -56 : 56,
-      scale: 0.985,
-    }),
+    enter: (d: number) => ({ opacity: 0, scale: 1.03 }),
+    center: { opacity: 1, scale: 1 },
+    exit: (d: number) => ({ opacity: 0, scale: 0.98 }),
   };
 
-  const cardVariants = {
-    enter: (customDirection: number) => ({
-      opacity: 0,
-      y: customDirection >= 0 ? 28 : -28,
-    }),
-    center: {
-      opacity: 1,
-      y: 0,
-    },
-    exit: (customDirection: number) => ({
-      opacity: 0,
-      y: customDirection >= 0 ? -24 : 24,
-    }),
+  const infoVariants = {
+    enter: (d: number) => ({ opacity: 0, y: d >= 0 ? 16 : -16 }),
+    center: { opacity: 1, y: 0 },
+    exit: (d: number) => ({ opacity: 0, y: d >= 0 ? -12 : 12 }),
   };
 
   return (
-    <div ref={containerRef} className="relative isolate overflow-hidden pb-4 md:pb-8">
-      <motion.div
-        style={{ y: brandY }}
-        className="pointer-events-none absolute -right-24 top-6 hidden md:block"
-      >
-        <div className="origin-top-right scale-[2.8] opacity-[0.08] blur-[1px] saturate-0 xl:scale-[3.5]">
-          <BrandMark lang={lang} />
+    <div
+      ref={containerRef}
+      className="relative grid min-h-[92vh] grid-cols-1 lg:grid-cols-[18rem_1fr] xl:grid-cols-[22rem_1fr]"
+    >
+      {/* ── Coluna esquerda: navegação vertical ── */}
+      <div className="relative z-10 flex flex-col justify-between bg-ambient-micro px-8 py-10 lg:px-10 lg:py-12">
+        {/* Contador */}
+        <div className="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.22em] text-ambient-muted">
+          <span className="text-ambient-dark font-medium">
+            {String(activeIndex + 1).padStart(2, "0")}
+          </span>
+          <span className="h-px w-8 bg-ambient-stone/50" />
+          <span>{String(projects.length).padStart(2, "0")}</span>
         </div>
-      </motion.div>
 
-      <div className="relative ml-auto w-full md:w-[92%] xl:w-[96%]">
-        <div className="relative aspect-[1.68/1] overflow-hidden md:aspect-[1.8/1]">
+        {/* Info do projeto ativo */}
+        <div className="my-auto py-12">
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
-              key={activeProject.slug}
+              key={`info-${activeProject.slug}`}
               custom={direction}
-              variants={imageVariants}
+              variants={infoVariants}
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.62, ease: "easeOut" }}
-              drag={projects.length > 1 ? "x" : false}
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.14}
-              dragMomentum={false}
-              onDragEnd={handleDragEnd}
-              className="absolute inset-0 cursor-grab active:cursor-grabbing"
+              transition={{ duration: 0.38, ease: "easeOut" }}
             >
+              <p className="mb-3 text-[0.72rem] uppercase tracking-[0.2em] text-ambient-canyon/60">
+                {activeProject.category} · {activeProject.year}
+              </p>
+              <h2 className="font-display text-[2.2rem] uppercase leading-[0.88] tracking-[-0.03em] text-ambient-dark xl:text-[2.7rem]">
+                {activeProject.title}
+              </h2>
+              <p className="mt-5 text-[0.95rem] leading-relaxed text-ambient-dark/55 xl:text-[1rem]">
+                {activeProject.description}
+              </p>
               <Link
                 href={withLang(`/${activeProject.section}/${activeProject.slug}`, lang)}
-                className="block h-full w-full"
+                className="mt-8 inline-flex items-center gap-4 text-[0.78rem] uppercase tracking-[0.18em] text-ambient-dark/50 transition-colors hover:text-ambient-electric"
+              >
+                <span className="block h-px w-8 bg-ambient-electric" />
+                {lang === "pt" ? "Ver projeto" : "View project"}
+              </Link>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Dots de navegação */}
+        <div className="flex flex-col gap-3">
+          {projects.map((project, index) => (
+            <button
+              key={project.slug}
+              type="button"
+              onClick={() => moveTo(index)}
+              aria-label={`${lang === "pt" ? "Ir para" : "Go to"} ${project.title}`}
+              className="group flex items-center gap-3 text-left"
+            >
+              <span
+                className={`block h-px transition-all duration-400 ${
+                  activeIndex === index
+                    ? "w-8 bg-ambient-electric"
+                    : "w-4 bg-ambient-stone/40 group-hover:w-6 group-hover:bg-ambient-stone"
+                }`}
+              />
+              <span
+                className={`text-[0.7rem] uppercase tracking-[0.16em] transition-colors duration-300 ${
+                  activeIndex === index
+                    ? "text-ambient-dark"
+                    : "text-ambient-muted/50 group-hover:text-ambient-muted"
+                }`}
+              >
+                {project.title}
+              </span>
+            </button>
+          ))}
+
+          <Link
+            href={withLang("/projetos", lang)}
+            className="mt-6 inline-flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] text-ambient-muted/50 transition-colors hover:text-ambient-electric"
+          >
+            <span className="block h-px w-6 bg-ambient-electric/60" />
+            {lang === "pt" ? "Todos os projetos" : "All projects"}
+          </Link>
+        </div>
+      </div>
+
+      {/* ── Coluna direita: imagem full-height com parallax ── */}
+      <div ref={imageRef} className="relative overflow-hidden bg-ambient-linen">
+        <AnimatePresence initial={false} custom={direction} mode="wait">
+          <motion.div
+            key={activeProject.slug}
+            custom={direction}
+            variants={imageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            drag={projects.length > 1 ? "x" : false}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.12}
+            dragMomentum={false}
+            onDragEnd={handleDragEnd}
+            className="absolute inset-0 cursor-grab active:cursor-grabbing"
+          >
+            <Link href={withLang(`/${activeProject.section}/${activeProject.slug}`, lang)} className="block h-full w-full">
+              {/* Parallax wrapper — imagem maior que o container */}
+              <motion.div
+                style={{ top: "-8%", bottom: "-8%", left: 0, right: 0, y: imageY }}
+                className="absolute"
               >
                 <Image
                   src={activeProject.cover}
                   alt={activeProject.title}
                   fill
                   priority={activeIndex === 0}
-                  sizes="(max-width: 768px) 100vw, 89vw"
+                  sizes="(max-width: 1024px) 100vw, 75vw"
                   className="object-cover object-center"
+                  placeholder="blur"
+                  blurDataURL={getImageBlurDataURL()}
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(25,20,17,0.02)_0%,rgba(25,20,17,0.12)_58%,rgba(25,20,17,0.32)_100%)]" />
-              </Link>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-
-      <div className="relative z-10 mt-8 grid gap-10 md:-mt-24 lg:grid-cols-[minmax(0,31rem)_1fr] lg:items-end xl:-mt-28">
-        <motion.div
-          style={{ y: cardY }}
-          className="max-w-[31rem] bg-ambient-micro/95 p-8 shadow-[0_24px_60px_rgba(32,24,21,0.08)] backdrop-blur-md sm:p-10"
-        >
-          <AnimatePresence initial={false} custom={direction} mode="wait">
-            <motion.div
-              key={`card-${activeProject.slug}`}
-              custom={direction}
-              variants={cardVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.42, ease: "easeOut" }}
-            >
-              <p className="text-label text-ambient-muted">
-                {activeProject.category} · {activeProject.year}
-              </p>
-              <h2 className="mt-4 font-display text-[2.65rem] uppercase leading-[0.84] tracking-[0.04em] text-ambient-dark sm:text-[3.3rem]">
-                {activeProject.title}
-              </h2>
-              <p className="mt-5 max-w-sm font-serif text-[1.08rem] leading-[1.85] text-ambient-dark/72 sm:text-[1.14rem]">
-                {activeProject.description}
-              </p>
-              <Link
-                href={withLang(`/${activeProject.section}/${activeProject.slug}`, lang)}
-                className="mt-10 inline-flex items-center gap-5 text-lg uppercase tracking-[0.14em] text-ambient-muted transition-colors hover:text-ambient-electric sm:text-xl"
-              >
-                <span className="block h-[2px] w-14 bg-ambient-electric" />
-                {lang === "pt" ? "Ver o projeto" : "View project"}
-              </Link>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-
-        <div className="flex flex-col gap-8 lg:items-end lg:pb-4">
-          <div className="flex items-center gap-4">
-            {projects.map((project, index) => (
-              <button
-                key={project.slug}
-                type="button"
-                onClick={() => moveTo(index)}
-                aria-label={`${lang === "pt" ? "Ir para" : "Go to"} ${project.title}`}
-                className="group flex h-5 w-5 items-center justify-center"
-              >
-                <span
-                  className={`block h-2.5 w-2.5 rounded-full transition-all duration-300 ${
-                    activeIndex === index
-                      ? "scale-110 bg-ambient-electric"
-                      : "bg-ambient-stone group-hover:bg-ambient-canyon"
-                  }`}
-                />
-              </button>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap items-center gap-6 text-[0.78rem] uppercase tracking-[0.2em] text-ambient-muted">
-            <span>
-              {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
-            </span>
-            <Link
-              href={withLang("/projetos", lang)}
-              className="inline-flex items-center gap-5 text-lg uppercase tracking-[0.14em] text-ambient-muted transition-colors hover:text-ambient-electric sm:text-xl"
-            >
-              <span className="block h-[2px] w-14 bg-ambient-electric" />
-              {lang === "pt" ? "Ver todos os projetos" : "View all projects"}
+              </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-ambient-dark/25 via-transparent to-transparent" />
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Localização discreta no canto inferior direito */}
+        <AnimatePresence initial={false} custom={direction} mode="wait">
+          <motion.div
+            key={`loc-${activeProject.slug}`}
+            custom={direction}
+            variants={infoVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.38, ease: "easeOut", delay: 0.1 }}
+            className="pointer-events-none absolute bottom-6 right-6 text-right"
+          >
+            <p className="text-[0.68rem] uppercase tracking-[0.2em] text-white/60">
+              {activeProject.location}
+            </p>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

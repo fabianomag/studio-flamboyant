@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/projects";
 import { withLang, type Lang } from "@/lib/i18n";
+import { getImageBlurDataURL } from "@/lib/image-placeholder";
 
 interface ProjectCardProps {
   project: Project;
@@ -11,7 +12,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, index = 0, lang = "pt" }: ProjectCardProps) {
-  const isNew = Number.parseInt(project.year, 10) >= 2024;
+  const isNew = Number.parseInt(project.year, 10) >= 2025;
   const sectionLabel =
     lang === "en"
       ? {
@@ -31,6 +32,8 @@ export function ProjectCard({ project, index = 0, lang = "pt" }: ProjectCardProp
           className="object-cover transition-all duration-700 ease-out group-hover:scale-[1.02]"
           sizes="(max-width: 768px) 100vw, 33vw"
           loading={index < 3 ? "eager" : "lazy"}
+          placeholder="blur"
+          blurDataURL={getImageBlurDataURL()}
         />
       </div>
 

@@ -1,20 +1,21 @@
 import type { Config } from "tailwindcss";
 
+// Paleta da brand Julia Fonseca (extraída de juliafonsecaarq.com)
+// Usada no site geral. Os cards Caderno Azul e Galeria Tréfle têm paletas próprias abaixo.
 const ambientBaseColors = {
   micro: "#FFFFFF",
-  linen: "#F6F6F6",
-  limao: "#D9FF4F",
-  stone: "#D9D9D9",
-  charcoal: "#252021",
-  dark: "#111111",
-  muted: "#8C8C8C",
-  deep: "#050A30",
-  electric: "#0000FF",
-  cyan: "#00FFFF",
-  canyon: "#8C8C8C",
-  terracota: "#b97a59",
-  wood: "#6d7f71",
-  blue: "#24386F",
+  linen: "#ececec",       // fundo suave (era #F6F6F6)
+  limao: "#D9FF4F",       // acento sistema — favicon, logo, *
+  stone: "#dfdfdf",       // divisores (era #D9D9D9)
+  charcoal: "#202020",    // dark UI — header/footer (era #252021)
+  dark: "#111111",        // preto texto
+  muted: "#9b9b9b",       // texto muted (era #8C8C8C / canyon duplicado)
+  deep: "#0b1e25",        // azul muito escuro — logo, texto forte (era #050A30)
+  electric: "#1d4f5f",    // cor principal — teal Julia (era #0000FF)
+  cyan: "#73bdd5",        // azul claro — CTAs, destaques (era #00FFFF)
+  terracota: "#d97757",   // acento quente — pontual (era #b97a59)
+  wood: "#6d7f71",        // mantido — usado na galeria
+  blue: "#24386F",        // mantido — reserva
 } as const;
 
 const cadernoAzulPalette = {

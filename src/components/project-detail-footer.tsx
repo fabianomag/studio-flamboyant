@@ -1,74 +1,62 @@
+import Image from "next/image";
 import Link from "next/link";
 import siteConfig from "@/lib/metadata";
 import { withLang, type Lang } from "@/lib/i18n";
 
 export function ProjectDetailFooter({ lang = "pt" }: { lang?: Lang }) {
   return (
-    <footer className="overflow-hidden border-t border-ambient-stone/35 bg-[#f4f2ee] text-ambient-dark">
-      <div className="section-padding py-8 md:py-9">
-        <div className="grid gap-x-10 gap-y-5 font-serif text-[0.74rem] leading-[1.08] text-ambient-muted md:grid-cols-[0.85fr_0.95fr_0.7fr_1fr] md:text-[0.8rem]">
-          <div className="flex flex-col gap-1">
-            <Link href={withLang("/projetos", lang)} className="hover:text-ambient-dark transition-colors">
+    <footer className="project-blueprint-surface project-blueprint-grid overflow-hidden border-t project-blueprint-rule text-[#14323d]">
+      <div className="section-padding py-8 md:py-10">
+        <div className="grid gap-x-10 gap-y-5 text-[0.72rem] uppercase tracking-[0.18em] text-[#14323d]/60 md:grid-cols-[0.9fr_0.9fr_0.7fr_1fr]">
+          <div className="flex flex-col gap-2">
+            <Link href={withLang("/projetos", lang)} className="transition-colors hover:text-ambient-electric">
               {lang === "pt" ? "Projetos" : "Projects"}
             </Link>
-            <Link href={withLang("/publicacoes", lang)} className="hover:text-ambient-dark transition-colors">
+            <Link href={withLang("/publicacoes", lang)} className="transition-colors hover:text-ambient-electric">
               {lang === "pt" ? "Publicações" : "Publications"}
             </Link>
-            <Link href={withLang("/sobre", lang)} className="hover:text-ambient-dark transition-colors">
+            <Link href={withLang("/sobre", lang)} className="transition-colors hover:text-ambient-electric">
               {lang === "pt" ? "Escritório" : "Studio"}
             </Link>
-            <Link href={withLang("/contato", lang)} className="hover:text-ambient-dark transition-colors">
+            <Link href={withLang("/contato", lang)} className="transition-colors hover:text-ambient-electric">
               {lang === "pt" ? "Contato" : "Contact"}
             </Link>
           </div>
 
-          <div className="flex flex-col gap-1">
-            <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-ambient-dark transition-colors">
+          <div className="flex flex-col gap-2">
+            <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-ambient-electric">
               Instagram
             </a>
-            <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="hover:text-ambient-dark transition-colors">
+            <a href={`https://wa.me/${siteConfig.whatsapp}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-ambient-electric">
               WhatsApp
             </a>
-            <a href={`mailto:${siteConfig.email}`} className="hover:text-ambient-dark transition-colors">
+            <a href={`mailto:${siteConfig.email}`} className="break-all transition-colors hover:text-ambient-electric">
               {siteConfig.email}
             </a>
           </div>
 
-          <div className="flex flex-col gap-1">
-            <Link href={withLang("/contato", lang)} className="hover:text-ambient-dark transition-colors">
+          <div className="flex flex-col gap-2">
+            <Link href={withLang("/contato", lang)} className="transition-colors hover:text-ambient-electric">
               {lang === "pt" ? "Fale conosco ↗" : "Get in touch ↗"}
             </Link>
           </div>
 
-          <div className="flex flex-col gap-1 md:items-end md:text-right">
+          <div className="flex flex-col gap-2 md:items-end md:text-right">
             <span>{siteConfig.location.city}, {siteConfig.location.state}</span>
             <span>© {new Date().getFullYear()} Julia Fonseca Arquitetura</span>
           </div>
         </div>
       </div>
 
-      <div className="pointer-events-none overflow-hidden">
-        <div className="flex w-full items-baseline justify-between whitespace-nowrap text-[#d0cbc5]">
-          <span className="inline-block font-display font-[500] text-[7.3vw] uppercase leading-[0.8] tracking-[-0.08em] [transform:scaleX(0.82)] md:text-[9.2vw] [transform-origin:left_center]">
-            <span className="flex justify-between gap-[0.2em]">
-              <span>J</span>
-              <span>u</span>
-              <span>l</span>
-              <span>i</span>
-              <span>a</span>
-              <span> </span>
-              <span>F</span>
-              <span>o</span>
-              <span>n</span>
-              <span>s</span>
-              <span>e</span>
-              <span>c</span>
-              <span>a</span>
-            </span>
-          </span>
-          <span className="font-display text-[9.8vw] font-[800] uppercase leading-[0.76] tracking-[-0.06em] md:text-[9.1vw]">
-            Arquitetura
-          </span>
+      <div className="pointer-events-none overflow-hidden border-t border-[#14323d]/10">
+        <div className="relative mx-auto h-[9rem] w-[92vw] max-w-[96rem] opacity-35 md:h-[13rem]">
+          <Image
+            src="/images/brand/jf-arquitetura-original.png"
+            alt="JF Arquitetura"
+            fill
+            sizes="92vw"
+            className="object-contain object-center brightness-0 [filter:brightness(0)_saturate(100%)_invert(22%)_sepia(29%)_saturate(1078%)_hue-rotate(151deg)_brightness(94%)_contrast(90%)]"
+          />
         </div>
       </div>
     </footer>

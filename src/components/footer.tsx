@@ -48,7 +48,7 @@ export function Footer({
       <div className="section-padding py-16 md:py-20">
         <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-[0.9fr_1fr_1fr]">
           <div className="flex flex-col justify-between gap-10">
-            <BrandMark inverted large lang={lang} />
+            <BrandMark inverted large lang={lang} variant="jf-original" />
             <div className="flex items-center gap-4 text-white/70">
               <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer" className="rounded-full bg-white/15 p-3 hover:bg-white/25 transition-colors">
                 <Instagram size={18} />
@@ -68,9 +68,9 @@ export function Footer({
                 {copy.office}
               </h3>
               <div className="flex flex-col gap-5 text-2xl uppercase tracking-[0.08em] text-white/70">
-                <Link href={withLang("/sobre", lang)} className="hover:text-ambient-wood transition-colors">{copy.office}</Link>
-                <Link href={withLang("/publicacoes", lang)} className="hover:text-ambient-wood transition-colors">{copy.publications}</Link>
-                <Link href={withLang("/contato", lang)} className="hover:text-ambient-wood transition-colors">{copy.contact}</Link>
+                <Link href={withLang("/sobre", lang)} className="hover:text-ambient-cyan transition-colors">{copy.office}</Link>
+                <Link href={withLang("/publicacoes", lang)} className="hover:text-ambient-cyan transition-colors">{copy.publications}</Link>
+                <Link href={withLang("/contato", lang)} className="hover:text-ambient-cyan transition-colors">{copy.contact}</Link>
               </div>
             </div>
 
@@ -80,7 +80,7 @@ export function Footer({
               </h3>
               <div className="flex flex-col gap-5 text-2xl uppercase tracking-[0.08em] text-white/70">
                 {copy.projectLinks.map((link) => (
-                  <Link key={link.label} href={withLang(link.href, lang)} className="hover:text-ambient-wood transition-colors">
+                  <Link key={link.label} href={withLang(link.href, lang)} className="hover:text-ambient-cyan transition-colors">
                     {link.label}
                   </Link>
                 ))}
@@ -92,11 +92,11 @@ export function Footer({
 
       <div className="section-padding pb-10">
         <div className="mx-auto flex max-w-7xl items-center justify-end gap-4 text-lg uppercase tracking-[0.18em]">
-          <Link href={withLang(pathname, "pt")} className={lang === "pt" ? "text-ambient-wood" : "text-white"}>
+          <Link href={withLang(pathname, "pt")} className={lang === "pt" ? "text-ambient-cyan" : "text-white"}>
             PT
           </Link>
           <span className="text-white/50">|</span>
-          <Link href={withLang(pathname, "en")} className={lang === "en" ? "text-ambient-wood" : "text-white"}>
+          <Link href={withLang(pathname, "en")} className={lang === "en" ? "text-ambient-cyan" : "text-white"}>
             EN
           </Link>
         </div>

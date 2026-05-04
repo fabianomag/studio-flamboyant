@@ -8,6 +8,7 @@ import { createMetadata } from "@/lib/metadata";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/json-ld";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
+import { RouteShellTransition } from "@/components/route-shell-transition";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <Navigation />
           </Suspense>
+          <RouteShellTransition />
           <main>{children}</main>
           <Suspense fallback={null}>
             <FooterController />

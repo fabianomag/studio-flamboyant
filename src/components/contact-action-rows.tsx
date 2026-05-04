@@ -31,19 +31,26 @@ function ActionButton({
   copied,
   onCopy,
   copiedLabel,
+  variant,
 }: {
   action: Action;
   copied: boolean;
   onCopy: (value: string) => void;
   copiedLabel: string;
+  variant: "page" | "panel";
 }) {
+  const baseClass =
+    variant === "panel"
+      ? "inline-flex w-full items-center justify-center gap-2 rounded-full border px-4 py-3 text-center text-[0.72rem] uppercase tracking-[0.2em] transition-all sm:w-full md:w-auto md:min-w-[11.5rem] md:px-4 md:py-2.5 md:text-[0.66rem] xl:min-w-[12rem]"
+      : "inline-flex w-full items-center justify-center gap-2 rounded-full border px-4 py-3 text-center text-[0.72rem] uppercase tracking-[0.2em] transition-all sm:w-full lg:w-auto lg:min-w-[11.75rem] lg:px-4 lg:py-2.5 lg:text-[0.66rem] xl:min-w-[12.5rem]";
+
   if (action.type === "link" && action.href) {
     return (
       <a
         href={action.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 rounded-full border border-ambient-stone px-4 py-2 text-xs uppercase tracking-[0.18em] text-ambient-dark transition-colors hover:border-ambient-electric hover:text-ambient-electric"
+        className={`${baseClass} border-ambient-stone/90 text-ambient-dark hover:border-ambient-electric hover:text-ambient-electric`}
       >
         <ExternalLink size={14} />
         {action.label}
@@ -56,8 +63,8 @@ function ActionButton({
       type="button"
       onClick={() => action.value && onCopy(action.value)}
       className={copied
-        ? "inline-flex items-center gap-2 rounded-full border border-ambient-electric bg-ambient-electric px-4 py-2 text-xs uppercase tracking-[0.18em] text-white transition-colors"
-        : "inline-flex items-center gap-2 rounded-full border border-ambient-stone px-4 py-2 text-xs uppercase tracking-[0.18em] text-ambient-dark transition-colors hover:border-ambient-electric hover:text-ambient-electric"}
+        ? `${baseClass} border-ambient-electric bg-ambient-electric text-white`
+        : `${baseClass} border-ambient-stone/90 text-ambient-dark hover:border-ambient-electric hover:text-ambient-electric`}
     >
       {copied ? <Check size={14} /> : <Copy size={14} />}
       {copied ? copiedLabel : action.label}
@@ -68,9 +75,11 @@ function ActionButton({
 export function ContactActionRows({
   lang,
   rows,
+  variant = "page",
 }: {
   lang: Lang;
   rows: Row[];
+  variant?: "page" | "panel";
 }) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
@@ -86,9 +95,10 @@ export function ContactActionRows({
   };
 
   const copiedLabel = lang === "pt" ? "Copiado" : "Copied";
+  const isPanel = variant === "panel";
 
   return (
-    <div className="mt-24 border-t border-ambient-stone/50">
+    <div className={isPanel ? "mt-12 border-t border-ambient-stone/50" : "mt-24 border-t border-ambient-stone/50"}>
       {rows.map((row) => {
         const Icon = iconMap[row.icon];
         const rowKey = `${row.label}-${row.value}`;
@@ -97,7 +107,9 @@ export function ContactActionRows({
         return (
           <div
             key={rowKey}
-            className="grid gap-6 border-b border-ambient-stone/50 py-8 lg:grid-cols-[1.25fr_0.75fr]"
+            className={`flex flex-col border-b border-ambient-stone/50 ${
+              isPanel ? "gap-5 py-6" : "gap-6 py-8"
+            }`}
           >
             <button
               type="button"
@@ -109,7 +121,13 @@ export function ContactActionRows({
               </span>
               <span className="block">
                 <span className="block text-xs uppercase tracking-[0.3em] text-ambient-canyon/50">{row.label}</span>
-                <span className="mt-3 block font-display text-[2rem] uppercase leading-[0.84] tracking-[-0.05em] text-ambient-dark transition-colors duration-500 group-hover:text-ambient-electric sm:text-[3.3rem] lg:text-[4.2rem]">
+                <span
+                  className={`mt-3 block font-display uppercase leading-[0.84] tracking-[-0.05em] text-ambient-dark transition-colors duration-500 group-hover:text-ambient-electric ${
+                    isPanel
+                      ? "text-[1.7rem] sm:text-[2.4rem] xl:text-[3.1rem]"
+                      : "text-[2rem] sm:text-[3.3rem] lg:text-[4.2rem]"
+                  }`}
+                >
                   {row.value}
                 </span>
                 <span className="mt-3 inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.22em] text-ambient-muted">
@@ -128,17 +146,18 @@ export function ContactActionRows({
               </span>
             </button>
 
-            <div className="flex flex-wrap items-center gap-3 lg:justify-end">
-              {row.actions.map((action) => (
-                <ActionButton
-                  key={`${rowKey}-${action.label}`}
-                  action={action}
-                  copied={action.type === "copy" && isCopied}
-                  onCopy={(value) => handleCopy(value, rowKey)}
-                  copiedLabel={copiedLabel}
-                />
-              ))}
-            </div>
+            <div className="flex flex-wrap justify-end gap-3">
+            {row.actions.map((action) => (
+              <ActionButton
+                key={`${rowKey}-${action.label}`}
+                action={action}
+                copied={action.type === "copy" && isCopied}
+                onCopy={(value) => handleCopy(value, rowKey)}
+                copiedLabel={copiedLabel}
+                variant={variant}
+              />
+            ))}
+          </div>
           </div>
         );
       })}

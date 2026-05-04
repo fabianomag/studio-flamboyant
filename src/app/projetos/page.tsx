@@ -30,14 +30,6 @@ export default function ProjetosPage({
   const projects = getAllProjects();
   const lang = resolveLang(searchParams?.lang);
   const t = copy[lang];
-  const initialCategory =
-    searchParams?.categoria && ["residencial", "comercial", "interiores"].includes(searchParams.categoria)
-      ? searchParams.categoria
-      : null;
-  const initialStatus =
-    searchParams?.status === "completed" || searchParams?.status === "in_progress"
-      ? searchParams.status
-      : null;
 
   return (
     <>
@@ -60,8 +52,6 @@ export default function ProjetosPage({
         <ProjectsFilter
           projects={projects}
           lang={lang}
-          initialCategory={initialCategory}
-          initialStatus={initialStatus}
         />
       </section>
     </>

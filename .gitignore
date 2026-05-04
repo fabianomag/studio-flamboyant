@@ -34,3 +34,14 @@ next-env.d.ts
 
 CLAUDE.md
 ESTRATEGIA-CONTEUDO-DRAFT.md
+
+# local managed-service intake
+/_incoming/
+
+# imagens originais — ficam só na máquina, nunca vão pro git
+/scraped-images/
+/_originals/
+mockups/
+public/Color/
+public/Font/
+public/Typo/

@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
-import siteConfig from "@/lib/metadata";
+import TeamShowcase, { type TeamMember } from "@/components/ui/team-showcase";
 import { resolveLang, withLang } from "@/lib/i18n";
+import { typographyTokenMap } from "@/lib/typography-system";
+import { getStudioContent } from "@/lib/studio-content";
+import { getImageBlurDataURL } from "@/lib/image-placeholder";
 
 export const metadata: Metadata = {
   title: "Escritório",
@@ -11,104 +14,24 @@ export const metadata: Metadata = {
     "Conheça Julia Fonseca, arquiteta especializada em projetos residenciais, comerciais e de interiores de alto padrão.",
 };
 
-const copy = {
-  pt: {
-    eyebrow: "Escritório",
-    titleTop: "Conceito",
-    titleBottom: "& equipe",
-    intro: [
-      "Um escritório com dinâmica criativa e descontraída, que valoriza um ambiente leve, comprometido e atento aos detalhes. Os projetos nascem da combinação entre personalidade, originalidade, funcionalidade e estética.",
-      "O estúdio já carrega uma identidade visual própria e uma marca projetual reconhecível, mesmo quando cada solução é desenhada de forma totalmente personalizada para o cliente. A linguagem é contemporânea, mas sem perder aconchego e receptividade.",
-    ],
-    quote:
-      "A arquitetura ideal tem como objetivo aguçar todos os sentidos do corpo humano, instigando visão, olfato, tato e audição, proporcionando uma experiência marcante e única.",
-    quoteAuthor: "Júlia Fonseca",
-    teamTitle: "Equipe",
-    cta: "Inicie seu projeto",
-    team: [
-      {
-        name: "Júlia Fonseca",
-        role: "Sócia-fundadora",
-        image: "/images/julia-team.webp",
-        bio:
-          "Formada em Arquitetura e Urbanismo em 2012 pelo Instituto Metodista Izabela Hendrix, em Belo Horizonte, e pós-graduada em arquitetura, iluminação e interiores pelo IPOG. Após atuar em escritório na capital mineira, retornou para Montes Claros, sua cidade natal, onde fundou o escritório em 2016.",
-      },
-      {
-        name: "Cecília Nogueira",
-        role: "Arquiteta coordenadora",
-        image: "/images/cecilia-team.webp",
-        bio:
-          "Formada em Arquitetura e Urbanismo em 2014 pela Faculdade Santo Agostinho, em Montes Claros, e pós-graduanda em Master em Arquitetura e Iluminação pelo IPOG. Depois de anos de atuação em interiores e consultórios, integrou oficialmente a equipe do escritório em 2023.",
-      },
-      {
-        name: "Rayssa Souto",
-        role: "Estagiária",
-        image: "/images/rayssa-team.webp",
-        bio:
-          "Estudante de Arquitetura e Urbanismo na UNIFIPMOC, em Montes Claros, e formada em curso técnico de Design de Interiores no Conservatório Lorenzo Fernandez.",
-      },
-      {
-        name: "Andréia Silva",
-        role: "Estagiária",
-        image: "/images/andreia-team.webp",
-        bio:
-          "Estudante do curso técnico em Edificações pelo SENAI e formada em Design de Interiores pelo Conservatório de Montes Claros.",
-      },
-    ],
-  },
-  en: {
-    eyebrow: "Studio",
-    titleTop: "Concept",
-    titleBottom: "& team",
-    intro: [
-      "A studio with a creative and relaxed rhythm, shaped by a light but committed atmosphere. Every project is developed through the balance of personality, originality, functionality and aesthetic clarity.",
-      "The studio already carries a recognizable visual identity and project language, even when each solution is fully tailored to the client. The approach is contemporary without losing warmth, comfort and receptiveness.",
-    ],
-    quote:
-      "Ideal architecture should awaken every human sense, engaging sight, smell, touch and hearing while creating a unique and memorable experience.",
-    quoteAuthor: "Julia Fonseca",
-    teamTitle: "Team",
-    cta: "Start your project",
-    team: [
-      {
-        name: "Julia Fonseca",
-        role: "Founder",
-        image: "/images/julia-team.webp",
-        bio:
-          "Graduated in Architecture and Urbanism in 2012 at Instituto Metodista Izabela Hendrix in Belo Horizonte, with postgraduate studies in architecture, lighting and interiors at IPOG. After working in architecture studios in Belo Horizonte, she returned to Montes Claros and founded the studio in 2016.",
-      },
-      {
-        name: "Cecília Nogueira",
-        role: "Lead architect",
-        image: "/images/cecilia-team.webp",
-        bio:
-          "Graduated in Architecture and Urbanism in 2014 at Faculdade Santo Agostinho in Montes Claros, with postgraduate studies in Architecture and Lighting at IPOG. After years working mainly on interiors and clinics, she formally joined the studio team in 2023.",
-      },
-      {
-        name: "Rayssa Souto",
-        role: "Intern",
-        image: "/images/rayssa-team.webp",
-        bio:
-          "Architecture and Urbanism student at UNIFIPMOC in Montes Claros, with a technical degree in Interior Design from Conservatório Lorenzo Fernandez.",
-      },
-      {
-        name: "Andréia Silva",
-        role: "Intern",
-        image: "/images/andreia-team.webp",
-        bio:
-          "Technical student in Building Construction at SENAI and graduate in Interior Design from the Conservatory of Montes Claros.",
-      },
-    ],
-  },
-} as const;
-
 export default function SobrePage({
   searchParams,
 }: {
   searchParams?: { lang?: string };
 }) {
   const lang = resolveLang(searchParams?.lang);
-  const t = copy[lang];
+  const t = getStudioContent(lang);
+  const displaySplitAccentVariants = typographyTokenMap.displaySplitAccent.variants ?? {};
+  const pageLeadVariants = typographyTokenMap.pageLead.variants ?? {};
+  const pageEyebrowClass =
+    typographyTokenMap.pageEyebrow.className ??
+    "text-label uppercase text-ambient-canyon/55";
+  const members: TeamMember[] = t.team.map((member, index) => ({
+    id: `${index + 1}`,
+    name: member.name,
+    role: member.role,
+    image: member.image,
+  }));
 
   return (
     <div className="min-h-screen bg-ambient-micro text-ambient-dark">
@@ -116,14 +39,14 @@ export default function SobrePage({
         <Reveal>
           <div className="mb-12 flex flex-col items-center gap-5">
             <span className="accent-line block h-12 w-[2px]" />
-            <p className="text-label text-ambient-dark/75">{t.eyebrow}</p>
+            <p className={pageEyebrowClass}>{t.eyebrow}</p>
           </div>
         </Reveal>
 
         <Reveal delay={0.08}>
-          <h1 className="mx-auto max-w-[72rem] text-center font-display text-[4.5rem] uppercase leading-[0.82] tracking-[0.03em] text-ambient-dark sm:text-[6rem] md:text-[7rem]">
+          <h1 className={displaySplitAccentVariants.studioPage ?? "mx-auto max-w-[72rem] text-center font-display text-[4.5rem] uppercase leading-[0.82] tracking-[0.03em] text-ambient-dark sm:text-[6rem] md:text-[7rem]"}>
             {t.titleTop}
-            <span className="block italic text-ambient-electric">{t.titleBottom}</span>
+            <span className={displaySplitAccentVariants.accentWord ?? "block italic text-ambient-electric"}>{t.titleBottom}</span>
           </h1>
         </Reveal>
       </section>
@@ -132,7 +55,7 @@ export default function SobrePage({
         <div className="mx-auto grid max-w-[118rem] gap-14 xl:grid-cols-[0.47fr_0.53fr] xl:items-start">
           <Reveal>
             <div className="max-w-[40rem] xl:pt-10">
-              <div className="space-y-8 border-l border-ambient-stone pl-8 text-[1.22rem] leading-[1.85] text-ambient-dark/78">
+              <div className={pageLeadVariants.studioPage ?? "space-y-8 border-l border-ambient-stone pl-8 text-[1.22rem] leading-[1.85] text-ambient-dark/78"}>
                 {t.intro.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -148,15 +71,47 @@ export default function SobrePage({
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="relative aspect-[1.28/1] overflow-hidden bg-ambient-linen">
-              <Image
-                src="/images/julia-office.webp"
-                alt="Julia Fonseca no escritório"
-                fill
-                priority
-                sizes="(max-width: 1280px) 100vw, 53vw"
-                className="object-cover"
-              />
+            <div className="mx-auto w-full max-w-[38rem] xl:ml-auto">
+              <div className="relative isolate overflow-hidden border border-ambient-stone/40 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(214,230,236,0.88))] p-4 shadow-[0_28px_70px_rgba(17,25,40,0.12)] md:p-5">
+                <div className="pointer-events-none absolute inset-x-[8%] top-0 h-16 border-x border-b border-ambient-electric/18 bg-white/55 backdrop-blur-[2px]" />
+                <div className="pointer-events-none absolute left-4 top-4 h-24 w-24 border-l border-t border-white/85 md:left-5 md:top-5 md:h-28 md:w-28" />
+                <div className="pointer-events-none absolute bottom-4 right-4 h-24 w-24 border-b border-r border-ambient-electric/45 md:bottom-5 md:right-5 md:h-28 md:w-28" />
+                <div className="pointer-events-none absolute right-0 top-[18%] h-[34%] w-[18%] bg-[linear-gradient(180deg,rgba(33,179,225,0.22),rgba(33,179,225,0))]" />
+                <div className="pointer-events-none absolute bottom-0 left-0 h-[22%] w-[34%] bg-[linear-gradient(90deg,rgba(255,255,255,0.42),rgba(255,255,255,0))]" />
+
+                <div className="relative aspect-[0.82/1] overflow-hidden bg-ambient-linen">
+                  <div
+                    className="pointer-events-none absolute inset-0 z-10"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 24%, rgba(19,120,153,0.10) 100%)",
+                    }}
+                  />
+                  <div
+                    className="pointer-events-none absolute left-0 top-0 z-10 h-[24%] w-[28%] border-r border-b border-white/60 bg-white/12 backdrop-blur-[1.5px]"
+                    style={{
+                      clipPath: "polygon(0 0, 100% 0, 78% 100%, 0 100%)",
+                    }}
+                  />
+                  <div
+                    className="pointer-events-none absolute bottom-0 right-0 z-10 h-[22%] w-[30%] border-l border-t border-ambient-electric/28 bg-ambient-electric/8"
+                    style={{
+                      clipPath: "polygon(22% 0, 100% 0, 100% 100%, 0 100%)",
+                    }}
+                  />
+
+                  <Image
+                    src="/images/julia-portrait.png"
+                    alt={t.officeImageAlt}
+                    fill
+                    priority
+                    sizes="(max-width: 1280px) 100vw, 36rem"
+                    className="object-cover"
+                    placeholder="blur"
+                    blurDataURL={getImageBlurDataURL("#d6e5ea", "#7ea7b8", "#f3f7f8")}
+                  />
+                </div>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -166,35 +121,12 @@ export default function SobrePage({
         <div className="mx-auto max-w-[118rem]">
           <div className="mb-12 flex flex-col items-center gap-5">
             <span className="accent-line block h-12 w-[2px]" />
-            <p className="text-label text-ambient-dark/75">{t.teamTitle}</p>
+            <p className={pageEyebrowClass}>{t.teamTitle}</p>
           </div>
 
-          <div className="grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-2 xl:grid-cols-4">
-            {t.team.map((member, index) => (
-              <Reveal key={member.name} delay={0.05 * (index + 1)}>
-                <article className="group">
-                  <div className="relative aspect-[0.78/1] overflow-hidden bg-ambient-linen">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      sizes="(max-width: 1280px) 100vw, 25vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                    />
-                  </div>
-                  <div className="mt-7">
-                    <h2 className="font-display text-[2.2rem] uppercase leading-[0.86] tracking-[0.04em] text-ambient-dark">
-                      {member.name}
-                    </h2>
-                    <p className="mt-3 text-label text-ambient-electric">{member.role}</p>
-                    <p className="mt-6 text-[1.02rem] leading-[1.85] text-ambient-dark/72">
-                      {member.bio}
-                    </p>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={0.06}>
+            <TeamShowcase members={members} />
+          </Reveal>
 
           <div className="mt-20 flex justify-end">
             <Link
