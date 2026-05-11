@@ -14,7 +14,7 @@ export default function InterioresPage() {
   const projects = getProjectsBySection("interiores");
 
   return (
-    <div className="bg-ambient-micro text-ambient-dark min-h-screen relative overflow-hidden">
+    <div className="bg-black text-white min-h-screen relative overflow-hidden">
       <div className="ambient-glow" style={{ "--ambient-warm": "#A86D5A" } as any} />
 
       <section className="pt-40 md:pt-56 pb-32 md:pb-48 section-padding relative z-10">

@@ -68,7 +68,7 @@ export function RouteShellTransition() {
             clearPendingRouteShellTransition();
             setActiveTransition(null);
           }}
-          className="pointer-events-none fixed inset-y-0 left-0 z-[92] hidden border-r border-ambient-stone/15 bg-ambient-micro shadow-[24px_0_60px_rgba(6,17,22,0.08)] lg:block lg:w-64 xl:w-72"
+          className="pointer-events-none fixed inset-y-0 left-0 z-[92] hidden border-r border-white/10 bg-black shadow-[24px_0_60px_rgba(6,17,22,0.08)] lg:block lg:w-64 xl:w-72"
         >
           <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-ambient-electric/40 to-transparent" />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.55),rgba(255,255,255,0.08))]" />

@@ -14,5 +14,5 @@ export default function ContatoPage({
   searchParams?: { lang?: string };
 }) {
   const lang = resolveLang(searchParams?.lang);
-  return <ContactShowcase lang={lang} />;
+  return <ContactShowcase lang={lang} animated={false} />;
 }

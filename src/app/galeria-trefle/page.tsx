@@ -56,7 +56,7 @@ export default function GaleriaTreflePage({
     "text-label uppercase text-ambient-canyon/55";
 
   return (
-    <div className="min-h-screen bg-ambient-micro text-ambient-dark">
+    <div className="min-h-screen bg-black text-white">
       <section className="section-padding pb-20 pt-40 md:pb-24 md:pt-52">
         <div className="mx-auto grid max-w-[112rem] gap-12 xl:grid-cols-[0.44fr_0.56fr] xl:items-end">
           <div className="max-w-[34rem]">
@@ -65,10 +65,10 @@ export default function GaleriaTreflePage({
               <p className={pageEyebrowClass}>{t.eyebrow}</p>
             </div>
 
-            <h1 className="font-display text-[3.5rem] uppercase leading-[0.82] tracking-[0.04em] text-ambient-dark sm:text-[4.5rem] lg:text-[5.5rem]">
+            <h1 className="font-display text-[3.5rem] uppercase leading-[0.82] tracking-[0.04em] text-white sm:text-[4.5rem] lg:text-[5.5rem]">
               {t.title}
             </h1>
-            <p className={pageLeadVariants.galleryPageIntro ?? "mt-6 font-serif text-[1.18rem] leading-[1.9] text-ambient-dark/76"}>
+            <p className={pageLeadVariants.galleryPageIntro ?? "mt-6 font-serif text-[1.18rem] leading-[1.9] text-white/76"}>
               {t.intro}
             </p>
 
@@ -92,7 +92,7 @@ export default function GaleriaTreflePage({
             </div>
           </div>
 
-          <div className="relative ml-auto aspect-[1.08/1] w-full overflow-hidden bg-ambient-linen shadow-[0_28px_60px_rgba(32,24,21,0.08)]">
+          <div className="relative ml-auto aspect-[1.08/1] w-full overflow-hidden bg-black shadow-[0_28px_60px_rgba(0,0,0,0.4)]">
             <Image
               src="/images/GALERIA TREFLE.png"
               alt="Galeria Tréfle"
@@ -111,8 +111,8 @@ export default function GaleriaTreflePage({
             <p className="text-label text-ambient-muted">{t.placeholderTitle}</p>
           </div>
 
-          <div className="space-y-8 border-l border-ambient-stone/80 pl-8">
-            <p className={pageLeadVariants.galleryPageBody ?? "font-serif text-[1.18rem] leading-[1.9] text-ambient-dark/76"}>{t.body}</p>
+          <div className="space-y-8 border-l border-white/15 pl-8">
+            <p className={pageLeadVariants.galleryPageBody ?? "font-serif text-[1.18rem] leading-[1.9] text-white/76"}>{t.body}</p>
             <p className="text-[0.95rem] uppercase tracking-[0.16em] text-ambient-muted/86">{t.placeholderText}</p>
           </div>
         </div>
@@ -123,11 +123,11 @@ export default function GaleriaTreflePage({
           {t.cards.map((card, index) => (
             <article
               key={card}
-              className="flex min-h-[18rem] flex-col justify-between border border-ambient-stone/70 bg-white/30 p-8"
+              className="flex min-h-[18rem] flex-col justify-between border border-white/10 bg-white/5 p-8"
             >
               <p className="text-label text-ambient-muted">0{index + 1}</p>
               <div>
-                <h2 className="font-display text-[2.2rem] uppercase leading-[0.88] tracking-[0.04em] text-ambient-dark">
+                <h2 className="font-display text-[2.2rem] uppercase leading-[0.88] tracking-[0.04em] text-white">
                   {card}
                 </h2>
                 <p className="mt-4 text-[0.9rem] uppercase tracking-[0.16em] text-ambient-muted/80">

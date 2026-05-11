@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Barlow, Barlow_Condensed, Newsreader, Syncopate } from "next/font/google";
+import "leaflet/dist/leaflet.css";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { FooterController } from "@/components/footer-controller";
@@ -8,7 +9,6 @@ import { createMetadata } from "@/lib/metadata";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/json-ld";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
-import { RouteShellTransition } from "@/components/route-shell-transition";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -54,15 +54,14 @@ export default function RootLayout({
       lang="pt-BR"
       className={cn(barlow.variable, barlowCondensed.variable, newsreader.variable, syncopate.variable, "font-sans")}
     >
-      <body className="font-sans antialiased bg-ambient-micro text-ambient-dark selection:bg-ambient-electric/20">
+      <body className="font-sans antialiased bg-black text-white selection:bg-ambient-electric/20">
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         <SmoothScroll>
           <Suspense fallback={null}>
             <Navigation />
           </Suspense>
-          <RouteShellTransition />
-          <main>{children}</main>
+<main>{children}</main>
           <Suspense fallback={null}>
             <FooterController />
           </Suspense>

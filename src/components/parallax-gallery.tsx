@@ -45,12 +45,12 @@ export function ParallaxGallery({ images }: { images: string[] }) {
   }
 
   return (
-    <div className="space-y-3 md:space-y-4">
+    <div className="space-y-0">
       {rows.map((row, rowIndex) => {
         if (row.layout === "full") {
           const item = row.images[0];
           return (
-            <div key={`${row.layout}-${rowIndex}`} className="relative aspect-[16/9] overflow-hidden bg-[#14323d]/8">
+            <div key={`${row.layout}-${rowIndex}`} className="relative aspect-[4/3] overflow-hidden bg-black">
               <Image
                 src={item.src}
                 alt={`Fotografia do Projeto ${item.index + 1}`}
@@ -74,11 +74,11 @@ export function ParallaxGallery({ images }: { images: string[] }) {
         return (
           <div
             key={`${row.layout}-${rowIndex}`}
-            className={`grid gap-3 md:gap-4 ${splitClass}`}
-            style={{ gridAutoRows: "clamp(18rem, 38vw, 36rem)" }}
+            className={`grid gap-px ${splitClass}`}
+            style={{ gridAutoRows: "clamp(14rem, 28vw, 26rem)" }}
           >
             {row.images.map((item) => (
-              <div key={item.src} className="relative overflow-hidden bg-[#14323d]/8">
+              <div key={item.src} className="relative overflow-hidden bg-black">
                 <Image
                   src={item.src}
                   alt={`Fotografia do Projeto ${item.index + 1}`}

@@ -49,7 +49,7 @@ export const typographyTokens: TypographyToken[] = [
     seoNote: "Do not use as H1 by default. It is a context label, not the main page topic.",
     currentStyle: [
       'Contact: "text-label uppercase text-ambient-canyon/55"',
-      'Studio: "text-label text-ambient-dark/75"',
+      'Studio: "text-label text-white/75"',
       'Gallery: "text-label text-ambient-muted"',
       'Home panel kicker anchor: ".home-ui-kicker" in globals.css',
     ].join(" | "),
@@ -93,7 +93,7 @@ export const typographyTokens: TypographyToken[] = [
     recommendedTags: ["p"],
     seoNote: "Primary supporting copy under the page heading; important for page clarity and keyword context.",
     currentStyle: [
-      'Preferred reference: Contact lead uses border-left and larger copy: page "mt-10 max-w-2xl pl-8 text-xl leading-relaxed sm:text-2xl"; panel "mt-7 max-w-[48rem] pl-6 text-[1rem] leading-relaxed sm:text-[1.12rem] xl:text-[1.2rem]"',
+      'Preferred reference: Contact lead uses border-left inside the floating white card: page "mt-6 max-w-[36rem] border-l border-black/14 pl-5 text-[1rem] leading-relaxed text-black/68 sm:text-[1.08rem]"; panel "mt-6 max-w-[34rem] border-l border-black/14 pl-5 text-[1rem] leading-relaxed text-black/68 sm:text-[1.05rem]"',
       'Related utility: ".quiet-serif" exists but is a different editorial voice.',
     ].join(" | "),
     currentExamples: [
@@ -113,21 +113,21 @@ export const typographyTokens: TypographyToken[] = [
     ],
     variants: {
       contactPage:
-        "mt-10 max-w-2xl pl-8 text-xl leading-relaxed sm:text-2xl",
+        "mt-5 max-w-[32rem] border-l border-black/14 pl-5 text-[0.96rem] leading-relaxed text-black/68 sm:text-[1.02rem]",
       contactPanel:
-        "mt-7 max-w-[48rem] pl-6 text-[1rem] leading-relaxed sm:text-[1.12rem] xl:text-[1.2rem]",
+        "mt-5 max-w-[30rem] border-l border-black/14 pl-5 text-[0.95rem] leading-relaxed text-black/68 sm:text-[1rem]",
       homeStudioPanel:
         "mt-7 max-w-[48rem] border-l border-ambient-stone pl-6 text-[1rem] leading-relaxed text-ambient-canyon/82 sm:text-[1.12rem] xl:text-[1.2rem]",
       homeEditorialPanel:
         "mt-7 max-w-[48rem] border-l border-ambient-stone pl-6 text-[1rem] leading-relaxed text-ambient-canyon/82 sm:text-[1.12rem] xl:text-[1.2rem]",
       publicationsIndexIntro:
-        "mx-auto max-w-2xl border-l border-ambient-stone pl-8 text-xl leading-relaxed text-ambient-dark/78 sm:text-2xl",
+        "mx-auto max-w-2xl border-l border-ambient-stone pl-8 text-xl leading-relaxed text-white/78 sm:text-2xl",
       studioPage:
-        "space-y-8 border-l border-ambient-stone pl-8 text-[1.22rem] leading-[1.85] text-ambient-dark/78",
+        "space-y-8 border-l border-ambient-stone pl-8 text-[1.22rem] leading-[1.85] text-white/78",
       galleryPageIntro:
-        "mt-6 font-serif text-[1.18rem] leading-[1.9] text-ambient-dark/76",
+        "mt-6 font-serif text-[1.18rem] leading-[1.9] text-white/76",
       galleryPageBody:
-        "font-serif text-[1.18rem] leading-[1.9] text-ambient-dark/76",
+        "font-serif text-[1.18rem] leading-[1.9] text-white/76",
     },
   },
   {
@@ -157,11 +157,11 @@ export const typographyTokens: TypographyToken[] = [
     recommendedTags: ["h1", "h2"],
     seoNote: "Use as H1 on standalone pages when it is the real page subject; use as H2 inside home panels or secondary narrative sections.",
     currentStyle: [
-      'Contact hero base: "font-display uppercase leading-[0.78] tracking-[-0.08em] text-ambient-dark"',
-      'Contact sizes: page "text-[22vw] sm:text-[14vw] lg:text-[9rem]"; panel "text-[16vw] sm:text-[5.2rem] xl:text-[6.4rem]"',
-      'Studio panel title: "mt-2 font-display text-[4rem] font-bold uppercase leading-[0.82] tracking-[-0.05em] text-ambient-dark sm:text-[5rem] lg:text-[7.5rem]"',
+      'Contact hero base inside white card: "font-display uppercase leading-[0.8] tracking-[-0.08em] text-black"',
+      'Contact sizes: page "text-[3.35rem] sm:text-[4.6rem] lg:text-[5.3rem]"; panel "text-[3rem] sm:text-[3.8rem] xl:text-[4.6rem]"',
+      'Studio panel title: "mt-2 font-display text-[4rem] font-bold uppercase leading-[0.82] tracking-[-0.05em] text-white sm:text-[5rem] lg:text-[7.5rem]"',
       'Accent word: "block italic text-ambient-electric"',
-      'Project narrative title: "mb-8 font-display text-4xl uppercase leading-[0.88] tracking-[-0.05em] text-[#14323d] sm:text-[4.8rem]"',
+      'Project narrative title: "mb-8 font-display text-4xl uppercase leading-[0.88] tracking-[-0.05em] text-white sm:text-[4.8rem]"',
     ].join(" | "),
     currentExamples: [
       "Vamos / conversar.",
@@ -178,15 +178,15 @@ export const typographyTokens: TypographyToken[] = [
     ],
     variants: {
       contactPage:
-        "font-display uppercase leading-[0.78] tracking-[-0.08em] text-ambient-dark text-[22vw] sm:text-[14vw] lg:text-[9rem]",
+        "mt-6 font-display uppercase leading-[0.82] tracking-normal text-black text-[2.75rem] sm:text-[3.35rem]",
       contactPanel:
-        "font-display uppercase leading-[0.78] tracking-[-0.08em] text-ambient-dark text-[16vw] sm:text-[5.2rem] xl:text-[6.4rem]",
+        "mt-6 font-display uppercase leading-[0.82] tracking-normal text-black text-[2.55rem] sm:text-[3.1rem]",
       homeStudioPanel:
-        "font-display uppercase leading-[0.78] tracking-[-0.08em] text-ambient-dark text-[16vw] sm:text-[5.2rem] xl:text-[6.4rem]",
+        "font-display uppercase leading-[0.78] tracking-[-0.08em] text-white text-[16vw] sm:text-[5.2rem] xl:text-[6.4rem]",
       studioPage:
-        "mx-auto max-w-[72rem] text-center font-display text-[4.5rem] uppercase leading-[0.82] tracking-[0.03em] text-ambient-dark sm:text-[6rem] md:text-[7rem]",
+        "mx-auto max-w-[72rem] text-center font-display text-[4.5rem] uppercase leading-[0.82] tracking-[0.03em] text-white sm:text-[6rem] md:text-[7rem]",
       projectNarrative:
-        "mb-8 font-display text-4xl uppercase leading-[0.88] tracking-[-0.05em] text-[#14323d] sm:text-[4.8rem]",
+        "mb-8 font-display text-4xl uppercase leading-[0.88] tracking-[-0.05em] text-white sm:text-[4.8rem]",
       accentWord: "block italic text-ambient-electric",
     },
   },
@@ -219,8 +219,8 @@ export const typographyTokens: TypographyToken[] = [
     recommendedTags: ["h3", "p"],
     seoNote: "Use h3 only when it adds real structure; if it merely repeats the same concept, a paragraph or span may be cleaner.",
     currentStyle: [
-      'Publication panel: "mt-3 font-display text-[2.2rem] uppercase leading-[0.88] tracking-[-0.02em] text-ambient-dark"',
-      'Gallery panel: "mt-3 max-w-[28rem] font-display text-[3.6rem] uppercase leading-[0.82] tracking-[-0.045em] text-ambient-dark lg:text-[4.8rem]"',
+      'Publication panel: "mt-3 font-display text-[2.2rem] uppercase leading-[0.88] tracking-[-0.02em] text-white"',
+      'Gallery panel: "mt-3 max-w-[28rem] font-display text-[3.6rem] uppercase leading-[0.82] tracking-[-0.045em] text-white lg:text-[4.8rem]"',
     ].join(" | "),
     currentExamples: ["Trefle*", "Caderno Azul*"],
     currentReferences: [
@@ -231,9 +231,9 @@ export const typographyTokens: TypographyToken[] = [
     ],
     variants: {
       publicationPanel:
-        "mt-3 max-w-[28rem] font-display text-[3.6rem] uppercase leading-[0.82] tracking-[-0.045em] text-ambient-dark lg:text-[4.8rem]",
+        "mt-3 max-w-[28rem] font-display text-[3.6rem] uppercase leading-[0.82] tracking-[-0.045em] text-white lg:text-[4.8rem]",
       galleryPanel:
-        "mt-3 max-w-[28rem] font-display text-[3.6rem] uppercase leading-[0.82] tracking-[-0.045em] text-ambient-dark lg:text-[4.8rem]",
+        "mt-3 max-w-[28rem] font-display text-[3.6rem] uppercase leading-[0.82] tracking-[-0.045em] text-white lg:text-[4.8rem]",
     },
   },
   {
@@ -468,7 +468,7 @@ export const typographyTokens: TypographyToken[] = [
     recommendedTags: ["h2"],
     seoNote: "Secondary heading inside the project narrative section.",
     currentStyle:
-      'Current class: "mb-8 font-display text-4xl uppercase leading-[0.88] tracking-[-0.05em] text-[#14323d] sm:text-[4.8rem]" + accent word "block italic text-ambient-electric"',
+      'Current class: "mb-8 font-display text-4xl uppercase leading-[0.88] tracking-[-0.05em] text-white sm:text-[4.8rem]" + accent word "block italic text-ambient-electric"',
     currentExamples: ["Materia, luz / e permanencia."],
     currentReferences: [
       "src/components/project-page.tsx",

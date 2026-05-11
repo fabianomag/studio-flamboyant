@@ -40,15 +40,7 @@ export default function ProjetosPage({
         projects={projects}
       />
 
-      <section className="section-padding pb-20 pt-44 md:pb-24 md:pt-48">
-        <div className="mx-auto max-w-[68rem]">
-          <div className="mx-auto max-w-5xl">
-            <p className="quiet-serif">{t.intro}</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-32 md:pb-40">
+      <section className="pb-32 bg-black pt-44 md:pb-40 md:pt-48">
         <ProjectsFilter
           projects={projects}
           lang={lang}

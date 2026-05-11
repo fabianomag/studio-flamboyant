@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { clsx } from "clsx";
-import { BrandMark } from "./brand-mark";
+import { BrandMark, BrandSymbol } from "./brand-mark";
+import Image from "next/image";
 import { FlipLink } from "@/components/ui/flip-links";
 import { resolveLang, withLang } from "@/lib/i18n";
 
@@ -168,7 +169,9 @@ export function Navigation() {
     setIsOpen((value) => !value);
   }, []);
   const isProjectsPage = pathname === "/projetos";
+  const isContactPage = pathname === "/contato";
   const isHomePage = pathname === "/" || pathname === "";
+  const isDarkPage = isProjectsPage || isHomePage || isContactPage;
 
   const switchLang = (nextLang: "pt" | "en") => {
     const params = new URLSearchParams(searchParams.toString());
@@ -183,18 +186,39 @@ export function Navigation() {
       <header
         className={clsx(
           "fixed left-0 right-0 top-0 z-[100] transition-all duration-700",
-          isOpen ? " text-white" : scrolled ? "bg-white/98 shadow-sm backdrop-blur-xl" : "bg-transparent"
+          isOpen ? "text-white" : scrolled
+            ? isDarkPage ? "bg-black/90 backdrop-blur-xl" : "bg-white/98 shadow-sm backdrop-blur-xl"
+            : "bg-transparent"
         )}
       >
-        <nav className="section-padding flex items-center justify-between py-6 md:py-7">
+        <nav className="section-padding flex h-[4.8rem] items-center justify-between">
           {/* Logo: no desktop aparece em todas as páginas; no mobile some na homepage */}
           <div
             className={clsx(
-              "relative z-[100] transition-opacity duration-300",
-              isHomePage ? "hidden lg:block lg:-ml-10" : "block lg:-ml-10"
+              "relative z-[100] flex h-full items-center transition-opacity duration-300",
+              isHomePage ? "hidden lg:flex lg:-ml-10" : "flex lg:-ml-10"
             )}
           >
-            {isOpen ? <BrandMark inverted lang={lang} variant="jf-original" /> : <BrandMark lang={lang} variant="jf-original" />}
+            {isHomePage && !isOpen ? (
+              <Link
+                href={withLang("/", lang)}
+                aria-label="Julia Fonseca Arquitetura"
+                className="inline-flex items-center justify-center transition-opacity hover:opacity-70"
+              >
+                <Image
+                  src="/images/brand/intro-assets/jf-symbol-1x.png"
+                  alt="JF"
+                  width={48}
+                  height={77}
+                  className="brightness-0 invert"
+                  priority
+                />
+              </Link>
+            ) : isOpen || isDarkPage ? (
+              <BrandMark inverted lang={lang} variant="jf-original" />
+            ) : (
+              <BrandMark lang={lang} variant="jf-original" />
+            )}
           </div>
 
           {/* Placeholder invisível na homepage mobile para manter burger à direita */}
@@ -208,9 +232,9 @@ export function Navigation() {
                 "group flex h-12 w-12 items-center justify-center border transition-all duration-300",
                 isOpen
                   ? "border-white/50 bg-transparent text-white"
-                  : isHomePage
+                  : isDarkPage
                     ? "border-white/50 text-white hover:border-white hover:text-white"
-                    : "border-ambient-stone text-ambient-dark hover:border-ambient-cyan hover:text-ambient-cyan"
+                    : "border-white/50 text-white hover:border-ambient-cyan hover:text-ambient-cyan"
               )}
               aria-label={isOpen ? labels.close : labels.open}
             >

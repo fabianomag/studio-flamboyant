@@ -116,14 +116,14 @@ export function ProjectsFilter({
       <div
         ref={controlsRef}
         id="filtros"
-        className="section-padding mx-auto mb-16 flex max-w-[74rem] flex-wrap items-center justify-center gap-3 md:mb-20 md:gap-4"
+        className="section-padding mx-auto mb-10 flex max-w-[74rem] flex-wrap items-center justify-center gap-3 md:mb-14 md:gap-4"
       >
         {/* Botão "Todos" — só mobile, para limpar filtro sem depender de clicar fora */}
         {(activeCategory || activeStatus) && (
           <button
             type="button"
             onClick={() => { setActiveCategory(null); setActiveStatus(null); }}
-            className="md:hidden min-w-[9.3rem] border border-ambient-electric bg-white px-4 py-3 text-[0.98rem] uppercase tracking-[0.14em] text-ambient-electric transition-colors"
+            className="md:hidden min-w-[9.3rem] border border-ambient-cyan bg-transparent px-4 py-3 text-[0.98rem] uppercase tracking-[0.14em] text-ambient-cyan transition-colors"
           >
             {labels.all}
           </button>
@@ -136,8 +136,8 @@ export function ProjectsFilter({
             onClick={() => setActiveCategory((current) => (current === cat.value ? null : cat.value))}
             className={`min-w-[9.3rem] border px-4 py-3 text-[0.98rem] uppercase tracking-[0.14em] transition-colors md:min-w-[9.7rem] md:px-5 md:text-[1.02rem] ${
               activeCategory === cat.value
-                ? "border-ambient-electric bg-ambient-electric text-white"
-                : "border-transparent bg-[#e8e8e8] text-ambient-dark/68 hover:bg-[#dddddd]"
+                ? "border-ambient-cyan bg-ambient-cyan text-black"
+                : "border-white/20 bg-transparent text-white/55 hover:border-white/50 hover:text-white"
             }`}
           >
             {cat.label}
@@ -150,8 +150,8 @@ export function ProjectsFilter({
             onClick={() => setActiveStatus((current) => (current === st.value ? null : st.value))}
             className={`min-w-[10rem] border px-4 py-3 text-[0.98rem] uppercase tracking-[0.14em] transition-colors md:min-w-[10.4rem] md:px-5 md:text-[1.02rem] ${
               activeStatus === st.value
-                ? "border-ambient-electric bg-ambient-electric text-white"
-                : "border-transparent bg-[#e8e8e8] text-ambient-dark/68 hover:bg-[#dddddd]"
+                ? "border-ambient-cyan bg-ambient-cyan text-black"
+                : "border-white/20 bg-transparent text-white/55 hover:border-white/50 hover:text-white"
             }`}
           >
             {st.label}
@@ -159,9 +159,9 @@ export function ProjectsFilter({
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-0 border-t border-ambient-stone/15 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-px bg-white/8 md:grid-cols-2 xl:grid-cols-3">
         {filtered.map((project, i) => (
-          <div key={project.slug} className="border-b border-ambient-stone/15">
+          <div key={project.slug} className="bg-black">
             <ProjectCard project={project} index={i} lang={lang} />
           </div>
         ))}

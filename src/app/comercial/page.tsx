@@ -14,7 +14,7 @@ export default function ComercialPage() {
   const projects = getProjectsBySection("comercial");
 
   return (
-    <div className="bg-ambient-micro text-ambient-dark min-h-screen relative overflow-hidden">
+    <div className="bg-black text-white min-h-screen relative overflow-hidden">
       <div className="ambient-glow" style={{ "--ambient-warm": "#C5A880" } as any} />
 
       <section className="pt-40 md:pt-56 pb-32 md:pb-48 section-padding relative z-10">

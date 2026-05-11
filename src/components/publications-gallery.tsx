@@ -93,8 +93,8 @@ export function PublicationsGallery({
               className={clsx(
                 "min-w-[8.5rem] border px-5 py-3 text-xl uppercase tracking-[0.14em] transition-colors",
                 activeType === type
-                  ? "border-ambient-electric text-ambient-electric bg-white"
-                  : "border-transparent bg-[#e8e8e8] text-ambient-dark/70 hover:bg-[#dedede]"
+                  ? "border-ambient-electric text-ambient-electric bg-ambient-electric/10"
+                  : "border-white/15 bg-white/5 text-white/60 hover:bg-white/10"
               )}
             >
               {labels.filters[type]}
@@ -104,10 +104,10 @@ export function PublicationsGallery({
       </section>
 
       <section className="pb-32 md:pb-40">
-        <div className="grid grid-cols-1 gap-0 border-t border-ambient-stone/15 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-0 border-t border-white/10 md:grid-cols-2 xl:grid-cols-3">
             {filtered.map((item) => (
-              <Link key={item.slug} href={withLang(item.href, lang)} className="group block border-b border-ambient-stone/15">
-                <div className="relative aspect-[1.86/1] overflow-hidden bg-ambient-linen">
+              <Link key={item.slug} href={withLang(item.href, lang)} className="group block border-b border-white/10">
+                <div className="relative aspect-[1.86/1] overflow-hidden bg-black">
                   {item.type === "studio" ? (
                     <div className="absolute inset-0 flex bg-white">
                       <div className="accent-line flex w-[18%] items-start justify-center pt-10">
@@ -143,15 +143,15 @@ export function PublicationsGallery({
                   ) : null}
                 </div>
 
-                <div className="bg-white px-7 pb-8 pt-6 md:px-8 md:pb-9 md:pt-7">
+                <div className="bg-black px-7 pb-8 pt-6 md:px-8 md:pb-9 md:pt-7">
                   <div className="flex items-center justify-between gap-6">
-                  <p className="text-[0.95rem] uppercase tracking-[0.18em] text-ambient-muted">{item.date}</p>
-                  <span className="border border-ambient-stone px-4 py-2 text-[0.92rem] uppercase tracking-[0.18em] text-ambient-muted transition-colors group-hover:border-ambient-electric group-hover:text-ambient-electric">
+                  <p className="text-[0.95rem] uppercase tracking-[0.18em] text-white/40">{item.date}</p>
+                  <span className="border border-white/20 px-4 py-2 text-[0.92rem] uppercase tracking-[0.18em] text-white/40 transition-colors group-hover:border-ambient-electric group-hover:text-ambient-electric">
                     {labels.pdf}
                   </span>
                   </div>
 
-                  <h2 className="mt-6 font-display text-[2.25rem] uppercase leading-[0.86] tracking-[0.04em] text-ambient-dark transition-colors group-hover:text-ambient-electric">
+                  <h2 className="mt-6 font-display text-[2.25rem] uppercase leading-[0.86] tracking-[0.04em] text-white transition-colors group-hover:text-ambient-electric">
                     {item.title}
                   </h2>
                 </div>

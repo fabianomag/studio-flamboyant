@@ -1,27 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useState, useCallback, useEffect, useRef, type MouseEvent as ReactMouseEvent } from "react";
+import { useState, useCallback, useEffect, type MouseEvent as ReactMouseEvent } from "react";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion, useScroll, useTransform, type PanInfo } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { ProjectCard } from "@/components/project-card";
 import type { Project } from "@/lib/projects";
 import { withLang, type Lang } from "@/lib/i18n";
 import { typographyTokenMap } from "@/lib/typography-system";
 import { ContactShowcase } from "@/components/contact-showcase";
-import {
-  getPendingRouteShellTransition,
-  setPendingRouteShellTransition,
-} from "@/lib/route-shell-transition";
+import { HomeSidenav } from "@/components/home-sidenav";
+import { setPendingRouteShellTransition } from "@/lib/route-shell-transition";
 import { getStudioContent } from "@/lib/studio-content";
 import TeamShowcase, { type TeamMember } from "@/components/ui/team-showcase";
-import { getImageBlurDataURL } from "@/lib/image-placeholder";
 
 type Section = "projetos" | "publicacao" | "galeria" | "escritorio" | "contato";
 type Copy = typeof copy[keyof typeof copy];
-const homeProjectOverlayTitleClass =
-  typographyTokenMap.homeProjectOverlayTitle.className ??
-  "mt-1 font-display text-[3rem] font-bold uppercase leading-[0.82] tracking-[-0.05em] text-white sm:text-[3.6rem] lg:text-[4.8rem]";
 const displaySplitAccentVariants = typographyTokenMap.displaySplitAccent.variants ?? {};
 const editorialAccentTitleVariants = typographyTokenMap.editorialAccentTitle.variants ?? {};
 const editorialAccentSubtitleVariants = typographyTokenMap.editorialAccentSubtitle.variants ?? {};
@@ -29,8 +23,6 @@ const pageLeadVariants = typographyTokenMap.pageLead.variants ?? {};
 const pageEyebrowClass =
   typographyTokenMap.pageEyebrow.className ??
   "text-label uppercase text-ambient-canyon/55";
-const sidebarIntroClass =
-  typographyTokenMap.sidebarIntro.className ?? "home-ui-copy mt-5";
 
 const latestPublication = {
   title: "Caderno Azul",
@@ -95,154 +87,29 @@ function PanelProjetos({
   t: Copy;
   onRouteClick: (event: ReactMouseEvent<HTMLAnchorElement>, href: string) => void;
 }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
-  const pausedRef = useRef(false);
-  const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({ target: imageRef, offset: ["start end", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
-
-  const activeProject = projects[activeIndex];
-
-  const paginate = useCallback((step: number) => {
-    setDirection(step);
-    setActiveIndex(c => (c + step + projects.length) % projects.length);
-  }, [projects.length]);
-
-  useEffect(() => {
-    if (autoplayRef.current) clearInterval(autoplayRef.current);
-    autoplayRef.current = setInterval(() => {
-      if (!pausedRef.current) paginate(1);
-    }, 5000);
-    return () => { if (autoplayRef.current) clearInterval(autoplayRef.current); };
-  }, [paginate]);
-
-  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    const power = Math.abs(info.offset.x) * Math.sign(info.offset.x) + info.velocity.x * 16;
-    if (Math.abs(power) > 140) {
-      pausedRef.current = true;
-      setTimeout(() => { pausedRef.current = false; }, 10000);
-      paginate(power < 0 ? 1 : -1);
-    }
-  };
-
-  const moveTo = (i: number) => {
-    if (i === activeIndex) return;
-    setDirection(i > activeIndex ? 1 : -1);
-    setActiveIndex(i);
-    pausedRef.current = true;
-    setTimeout(() => { pausedRef.current = false; }, 10000);
-  };
-
-  if (!activeProject) return null;
-  const activeProjectHref = withLang(`/${activeProject.section}/${activeProject.slug}`, lang);
+  const viewAllHref = withLang("/projetos", lang);
 
   return (
-    <div className="flex h-full flex-col">
-      {/* Imagem com parallax */}
-      <div ref={imageRef} className="relative flex-1 overflow-hidden bg-ambient-linen">
-        <AnimatePresence initial={false} custom={direction} mode="wait">
-          <motion.div
-            key={activeProject.slug}
-            initial={{ opacity: 0, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.1}
-            dragMomentum={false}
-            onDragEnd={handleDragEnd}
-            className="absolute inset-0 cursor-grab active:cursor-grabbing"
-          >
-            <Link
-              href={activeProjectHref}
-              onClick={(event) => onRouteClick(event, activeProjectHref)}
-              className="block h-full w-full"
-            >
-              <motion.div style={{ top: "-6%", bottom: "-6%", left: 0, right: 0, y: imageY }} className="absolute">
-                <Image
-                  src={activeProject.cover}
-                  alt={activeProject.title}
-                  fill
-                  priority
-                  sizes="75vw"
-                  className="object-cover"
-                  placeholder="blur"
-                  blurDataURL={getImageBlurDataURL()}
-                />
-              </motion.div>
-              <div className="absolute inset-0 bg-gradient-to-t from-ambient-dark/30 via-transparent to-transparent" />
-            </Link>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Info discreta sobre a imagem */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`overlay-${activeProject.slug}`}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.35 }}
-            className="pointer-events-none absolute bottom-6 left-7 right-7 flex items-end justify-between"
-          >
-            <div>
-              <p className="home-ui-overlay-meta">{activeProject.category} · {activeProject.year}</p>
-              <h2 className={homeProjectOverlayTitleClass}>
-                {activeProject.title}
-              </h2>
+    <div className="flex h-full flex-col bg-black">
+      {/* Grid de projetos com scroll */}
+      <div className="flex-1 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="grid grid-cols-2 gap-px bg-white/8 xl:grid-cols-3">
+          {projects.map((project, i) => (
+            <div key={project.slug} className="bg-black">
+              <ProjectCard project={project} index={i} lang={lang} />
             </div>
-            <Link
-              href={activeProjectHref}
-              onClick={(event) => onRouteClick(event, activeProjectHref)}
-              className="home-ui-overlay-action pointer-events-auto mb-1 ml-6 shrink-0 transition-colors hover:text-white"
-            >
-              {t.viewProject} →
-            </Link>
-          </motion.div>
-        </AnimatePresence>
+          ))}
+        </div>
       </div>
 
-      {/* Nav inferior */}
-      <div className="flex items-center justify-between border-t border-ambient-stone/20 bg-ambient-micro px-7 py-4">
-        <div className="flex items-center gap-3">
-          {projects.map((p, i) => (
-            <button
-              key={p.slug}
-              onClick={() => moveTo(i)}
-              aria-label={p.title}
-              className="group flex h-6 w-6 items-center justify-center"
-            >
-              <span
-                className={`block h-0 w-0 transition-all duration-300 ${
-                  i % 2 === 0
-                    ? "border-x-[4px] border-b-[7px] border-x-transparent"
-                    : "border-x-[4px] border-t-[7px] border-x-transparent"
-                } ${
-                  i === activeIndex
-                    ? i % 2 === 0
-                      ? "scale-125 border-b-ambient-electric"
-                      : "scale-125 border-t-ambient-electric"
-                    : i % 2 === 0
-                      ? "border-b-ambient-stone group-hover:border-b-ambient-electric/70"
-                      : "border-t-ambient-stone group-hover:border-t-ambient-electric/70"
-                }`}
-              />
-            </button>
-          ))}
-          <span className="home-ui-meta ml-2">
-            {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
-          </span>
-        </div>
+      {/* Rodapé */}
+      <div className="flex shrink-0 items-center justify-end border-t border-white/10 bg-black px-7 py-4">
         <Link
-          href={withLang("/projetos", lang)}
-          onClick={(event) => onRouteClick(event, withLang("/projetos", lang))}
-          className="home-ui-action inline-flex items-center gap-3 transition-colors hover:text-ambient-electric"
+          href={viewAllHref}
+          onClick={(event) => onRouteClick(event, viewAllHref)}
+          className="inline-flex items-center gap-3 text-[0.78rem] uppercase tracking-[0.18em] text-white/55 transition-colors hover:text-ambient-cyan"
         >
-          <span className="block h-px w-6 bg-ambient-electric" />
+          <span className="block h-px w-6 bg-ambient-cyan" />
           {t.viewAll}
         </Link>
       </div>
@@ -289,9 +156,9 @@ function PanelPublicacao({
           </div>
         </div>
       </Link>
-      <div className="flex flex-1 flex-col justify-center bg-ambient-micro p-10 lg:p-12">
+      <div className="flex flex-1 flex-col justify-center bg-black p-10 lg:p-12">
         <p className={pageEyebrowClass}>Publicação</p>
-        <h3 className={editorialAccentSubtitleVariants.publicationPanel ?? "mt-3 font-display text-[2.2rem] uppercase leading-[0.88] tracking-[-0.02em] text-ambient-dark"}>
+        <h3 className={editorialAccentSubtitleVariants.publicationPanel ?? "mt-3 font-display text-[2.2rem] uppercase leading-[0.88] tracking-[-0.02em] text-white"}>
           Caderno Azul<span className="text-ambient-cyan">*</span>
         </h3>
         <p className={pageLeadVariants.homeEditorialPanel ?? "home-ui-copy mt-5"}>{t.publicationIntro}</p>
@@ -346,9 +213,9 @@ function PanelGaleria({
           </div>
         </div>
       </Link>
-      <div className="flex flex-1 flex-col justify-center bg-ambient-micro p-10 lg:p-12">
+      <div className="flex flex-1 flex-col justify-center bg-black p-10 lg:p-12">
         <p className={pageEyebrowClass}>Galeria</p>
-        <h3 className={editorialAccentSubtitleVariants.galleryPanel ?? "mt-3 max-w-[28rem] font-display text-[3.6rem] uppercase leading-[0.82] tracking-[-0.045em] text-ambient-dark lg:text-[4.8rem]"}>
+        <h3 className={editorialAccentSubtitleVariants.galleryPanel ?? "mt-3 max-w-[28rem] font-display text-[3.6rem] uppercase leading-[0.82] tracking-[-0.045em] text-white lg:text-[4.8rem]"}>
           Tréfle<span className="text-ambient-limao">*</span>
         </h3>
         <p className={pageLeadVariants.homeEditorialPanel ?? "home-ui-copy mt-5"}>{t.galleryIntro}</p>
@@ -397,7 +264,7 @@ function PanelEscritorio({
       {/* Título enorme */}
       <div className="px-8 pt-12 lg:px-12 lg:pt-14">
         <p className={pageEyebrowClass}>{studio.homeTitle}</p>
-        <h2 className={displaySplitAccentVariants.homeStudioPanel ?? "mt-2 font-display text-[4rem] font-bold uppercase leading-[0.82] tracking-[-0.05em] text-ambient-dark sm:text-[5rem] lg:text-[7.5rem]"}>
+        <h2 className={displaySplitAccentVariants.homeStudioPanel ?? "mt-2 font-display text-[4rem] font-bold uppercase leading-[0.82] tracking-[-0.05em] text-white sm:text-[5rem] lg:text-[7.5rem]"}>
           Uma equipe
           <span className={displaySplitAccentVariants.accentWord ?? "block italic text-ambient-electric"}>autoral.</span>
         </h2>
@@ -405,14 +272,14 @@ function PanelEscritorio({
 
       {/* Intro */}
       <div className="px-8 pt-8 lg:px-12">
-        <p className={pageLeadVariants.homeStudioPanel ?? "max-w-[38rem] border-l-2 border-ambient-electric/40 pl-6 text-[1.05rem] leading-relaxed text-ambient-dark/70 lg:text-[1.2rem]"}>
+        <p className={pageLeadVariants.homeStudioPanel ?? "max-w-[38rem] border-l-2 border-ambient-electric/40 pl-6 text-[1.05rem] leading-relaxed text-white/70 lg:text-[1.2rem]"}>
           {studio.homeIntro}
         </p>
       </div>
       <TeamShowcase members={members} />
 
       {/* Lista da equipe */}
-      <div className="border-t border-ambient-stone/30 px-8 py-8 lg:px-12">
+      <div className="border-t border-white/10 px-8 py-8 lg:px-12">
 
       </div>
     </div>
@@ -427,23 +294,14 @@ function PanelContato({ lang }: { lang: Lang }) {
 // ── HomePanel principal ───────────────────────────────────────────
 export function HomePanel({ projects, lang }: { projects: Project[]; lang: Lang }) {
   const [active, setActive] = useState<Section>("projetos");
-  const [isHomeEnterMasked, setIsHomeEnterMasked] = useState(() => {
-    if (typeof window === "undefined" || window.innerWidth < 1024) return false;
-    return getPendingRouteShellTransition() === "home-enter";
-  });
+  const [sidenavKey, setSidenavKey] = useState(0);
   const router = useRouter();
   const t = copy[lang];
 
+  // Força remontagem do sidenav a cada vez que o HomePanel monta,
+  // garantindo que a animação de wipe dispara ao voltar para a home.
   useEffect(() => {
-    if (typeof window === "undefined" || window.innerWidth < 1024) return;
-    if (getPendingRouteShellTransition() !== "home-enter") return;
-
-    setIsHomeEnterMasked(true);
-    const timer = window.setTimeout(() => {
-      setIsHomeEnterMasked(false);
-    }, 620);
-
-    return () => window.clearTimeout(timer);
+    setSidenavKey(k => k + 1);
   }, []);
 
   const handleRouteClick = useCallback((event: ReactMouseEvent<HTMLAnchorElement>, href: string) => {
@@ -479,58 +337,9 @@ export function HomePanel({ projects, lang }: { projects: Project[]; lang: Lang 
   };
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
-      {/* ── Coluna esquerda ── */}
-      <div
-        className={`flex shrink-0 flex-col justify-between border-r border-ambient-stone/15 bg-ambient-micro px-8 pb-10 pt-32 transition-opacity duration-200 lg:w-64 lg:px-10 lg:pb-12 lg:pt-40 xl:w-72 ${
-          isHomeEnterMasked ? "pointer-events-none opacity-0" : "opacity-100"
-        }`}
-      >
-        {/* Intro */}
-        <div>
-          <p className="home-ui-kicker">
-            Arquitetura & Interiores
-          </p>
-          <p className={sidebarIntroClass}>
-            {t.intro}
-          </p>
-        </div>
-
-        {/* Navegação */}
-        <nav className="flex flex-col gap-1">
-          {t.nav.map(item => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setActive(item.id)}
-              className={`group flex items-center gap-4 py-2 text-left transition-colors duration-200 ${
-                active === item.id ? "text-ambient-dark" : "text-ambient-dark/64 hover:text-ambient-dark/84"
-              }`}
-            >
-              {active === item.id ? (
-                <span className="block shrink-0 transition-all duration-300"
-                  style={{ width: 0, height: 0, borderTop: "5px solid transparent", borderBottom: "5px solid transparent", borderLeft: "8px solid var(--color-ambient-electric)" }}
-                />
-              ) : (
-                <span className="block h-px w-3 bg-ambient-stone/40 transition-all duration-300 group-hover:w-5 group-hover:bg-ambient-stone" />
-              )}
-              <span className={`home-ui-nav transition-all duration-300 ${
-                active === item.id ? "font-medium text-ambient-electric" : ""
-              }`}>
-                {item.label}
-              </span>
-            </button>
-          ))}
-        </nav>
-
-        {/* Localização */}
-        <p className="home-ui-location">
-          Montes Claros, MG
-        </p>
-      </div>
-
-      {/* ── Coluna direita: painel trocável ── */}
-      <div className="relative flex-1 overflow-hidden">
+    <div className="relative h-screen overflow-hidden">
+      {/* ── Painel trocável — ocupa tela inteira no desktop, topo no mobile ── */}
+      <div className="absolute inset-0 lg:inset-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
@@ -545,6 +354,15 @@ export function HomePanel({ projects, lang }: { projects: Project[]; lang: Lang 
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* ── Sidenav com triângulo e wipe ── */}
+      <HomeSidenav
+        key={sidenavKey}
+        lang={lang}
+        active={active}
+        onSelect={setActive}
+        visible={true}
+      />
     </div>
   );
 }

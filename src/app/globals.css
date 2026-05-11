@@ -25,12 +25,12 @@
   }
 
   body {
-    @apply bg-ambient-micro text-ambient-dark;
+    @apply bg-black text-white;
     letter-spacing: 0.01em;
   }
 
   ::selection {
-    @apply bg-ambient-electric/20 text-ambient-dark;
+    @apply bg-ambient-electric/20 text-white;
   }
   .theme {
     --font-heading: var(--font-barlow);
@@ -151,29 +151,26 @@
   }
 
   .quiet-serif {
-    @apply font-serif text-[1.15rem] leading-[1.8] text-ambient-dark/75 md:text-[1.35rem];
+    @apply font-serif text-[1.15rem] leading-[1.8] text-white/70 md:text-[1.35rem];
   }
 
   .project-blueprint-surface {
-    background-color: #d7e1e3;
-    color: #14323d;
+    background-color: #0a0a0a;
+    color: #ffffff;
   }
 
   .project-blueprint-grid {
     background-image:
-      linear-gradient(rgba(20, 50, 61, 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(20, 50, 61, 0.05) 1px, transparent 1px),
-      radial-gradient(circle at top left, rgba(115, 189, 213, 0.16), transparent 34%);
-    background-size: 36px 36px, 36px 36px, 100% 100%;
-    background-position: center, center, center;
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 36px 36px, 36px 36px;
+    background-position: center, center;
   }
 
   .project-blueprint-panel {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.12)),
-      rgba(215, 225, 227, 0.72);
-    border: 1px solid rgba(20, 50, 61, 0.16);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .project-blueprint-rule {
@@ -217,6 +214,42 @@
   .home-ui-overlay-action {
     @apply text-[0.92rem] uppercase tracking-[0.18em];
     color: rgba(255, 255, 255, 0.82);
+  }
+
+  .contact-map__viewport {
+    background: #050505;
+  }
+
+  .contact-map__viewport .leaflet-container {
+    height: 100%;
+    width: 100%;
+    background: #050505;
+    font: inherit;
+  }
+
+  .contact-map__viewport .leaflet-control-container {
+    display: none;
+  }
+
+  .contact-map__viewport .leaflet-tile-pane {
+    filter: grayscale(1) invert(1) contrast(2.15) brightness(0.92);
+    opacity: 0.96;
+  }
+
+  .contact-map__viewport .leaflet-overlay-pane svg {
+    filter: none;
+  }
+
+  .contact-map__triangle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 22px;
+    height: 22px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    border-left: 1px solid rgba(255, 255, 255, 0.72);
+    border-top: 1px solid rgba(255, 255, 255, 0.72);
+    pointer-events: none;
   }
 }
 

@@ -92,13 +92,13 @@ export function FeaturedProjectShowcase({
       className="relative grid min-h-[92vh] grid-cols-1 lg:grid-cols-[18rem_1fr] xl:grid-cols-[22rem_1fr]"
     >
       {/* ── Coluna esquerda: navegação vertical ── */}
-      <div className="relative z-10 flex flex-col justify-between bg-ambient-micro px-8 py-10 lg:px-10 lg:py-12">
+      <div className="relative z-10 flex flex-col justify-between bg-black px-8 py-10 lg:px-10 lg:py-12">
         {/* Contador */}
-        <div className="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.22em] text-ambient-muted">
-          <span className="text-ambient-dark font-medium">
+        <div className="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.22em] text-white/40">
+          <span className="text-white font-medium">
             {String(activeIndex + 1).padStart(2, "0")}
           </span>
-          <span className="h-px w-8 bg-ambient-stone/50" />
+          <span className="h-px w-8 bg-white/20" />
           <span>{String(projects.length).padStart(2, "0")}</span>
         </div>
 
@@ -117,15 +117,15 @@ export function FeaturedProjectShowcase({
               <p className="mb-3 text-[0.72rem] uppercase tracking-[0.2em] text-ambient-canyon/60">
                 {activeProject.category} · {activeProject.year}
               </p>
-              <h2 className="font-display text-[2.2rem] uppercase leading-[0.88] tracking-[-0.03em] text-ambient-dark xl:text-[2.7rem]">
+              <h2 className="font-display text-[2.2rem] uppercase leading-[0.88] tracking-[-0.03em] text-white xl:text-[2.7rem]">
                 {activeProject.title}
               </h2>
-              <p className="mt-5 text-[0.95rem] leading-relaxed text-ambient-dark/55 xl:text-[1rem]">
+              <p className="mt-5 text-[0.95rem] leading-relaxed text-white/55 xl:text-[1rem]">
                 {activeProject.description}
               </p>
               <Link
                 href={withLang(`/${activeProject.section}/${activeProject.slug}`, lang)}
-                className="mt-8 inline-flex items-center gap-4 text-[0.78rem] uppercase tracking-[0.18em] text-ambient-dark/50 transition-colors hover:text-ambient-electric"
+                className="mt-8 inline-flex items-center gap-4 text-[0.78rem] uppercase tracking-[0.18em] text-white/50 transition-colors hover:text-ambient-electric"
               >
                 <span className="block h-px w-8 bg-ambient-electric" />
                 {lang === "pt" ? "Ver projeto" : "View project"}
@@ -154,8 +154,8 @@ export function FeaturedProjectShowcase({
               <span
                 className={`text-[0.7rem] uppercase tracking-[0.16em] transition-colors duration-300 ${
                   activeIndex === index
-                    ? "text-ambient-dark"
-                    : "text-ambient-muted/50 group-hover:text-ambient-muted"
+                    ? "text-white"
+                    : "text-white/30 group-hover:text-white/60"
                 }`}
               >
                 {project.title}
@@ -174,7 +174,7 @@ export function FeaturedProjectShowcase({
       </div>
 
       {/* ── Coluna direita: imagem full-height com parallax ── */}
-      <div ref={imageRef} className="relative overflow-hidden bg-ambient-linen">
+      <div ref={imageRef} className="relative overflow-hidden bg-black">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={activeProject.slug}

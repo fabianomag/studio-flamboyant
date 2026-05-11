@@ -34,7 +34,7 @@ export default function SobrePage({
   }));
 
   return (
-    <div className="min-h-screen bg-ambient-micro text-ambient-dark">
+    <div className="min-h-screen bg-black text-white">
       <section className="section-padding mx-auto w-full max-w-[118rem] pb-20 pt-40 md:pb-24 md:pt-52">
         <Reveal>
           <div className="mb-12 flex flex-col items-center gap-5">
@@ -44,7 +44,7 @@ export default function SobrePage({
         </Reveal>
 
         <Reveal delay={0.08}>
-          <h1 className={displaySplitAccentVariants.studioPage ?? "mx-auto max-w-[72rem] text-center font-display text-[4.5rem] uppercase leading-[0.82] tracking-[0.03em] text-ambient-dark sm:text-[6rem] md:text-[7rem]"}>
+          <h1 className={displaySplitAccentVariants.studioPage ?? "mx-auto max-w-[72rem] text-center font-display text-[4.5rem] uppercase leading-[0.82] tracking-[0.03em] text-white sm:text-[6rem] md:text-[7rem]"}>
             {t.titleTop}
             <span className={displaySplitAccentVariants.accentWord ?? "block italic text-ambient-electric"}>{t.titleBottom}</span>
           </h1>
@@ -55,14 +55,14 @@ export default function SobrePage({
         <div className="mx-auto grid max-w-[118rem] gap-14 xl:grid-cols-[0.47fr_0.53fr] xl:items-start">
           <Reveal>
             <div className="max-w-[40rem] xl:pt-10">
-              <div className={pageLeadVariants.studioPage ?? "space-y-8 border-l border-ambient-stone pl-8 text-[1.22rem] leading-[1.85] text-ambient-dark/78"}>
+              <div className={pageLeadVariants.studioPage ?? "space-y-8 border-l border-ambient-stone pl-8 text-[1.22rem] leading-[1.85] text-white/78"}>
                 {t.intro.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
 
               <div className="mt-14 max-w-[36rem]">
-                <blockquote className="font-serif text-[1.65rem] leading-[1.7] text-ambient-dark">
+                <blockquote className="font-serif text-[1.65rem] leading-[1.7] text-white">
                   “{t.quote}”
                 </blockquote>
                 <p className="mt-6 text-right text-label text-ambient-muted">{t.quoteAuthor}</p>
@@ -72,14 +72,14 @@ export default function SobrePage({
 
           <Reveal delay={0.1}>
             <div className="mx-auto w-full max-w-[38rem] xl:ml-auto">
-              <div className="relative isolate overflow-hidden border border-ambient-stone/40 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(214,230,236,0.88))] p-4 shadow-[0_28px_70px_rgba(17,25,40,0.12)] md:p-5">
+              <div className="relative isolate overflow-hidden border border-white/10 bg-white/5 p-4 shadow-[0_28px_70px_rgba(0,0,0,0.4)] md:p-5">
                 <div className="pointer-events-none absolute inset-x-[8%] top-0 h-16 border-x border-b border-ambient-electric/18 bg-white/55 backdrop-blur-[2px]" />
                 <div className="pointer-events-none absolute left-4 top-4 h-24 w-24 border-l border-t border-white/85 md:left-5 md:top-5 md:h-28 md:w-28" />
                 <div className="pointer-events-none absolute bottom-4 right-4 h-24 w-24 border-b border-r border-ambient-electric/45 md:bottom-5 md:right-5 md:h-28 md:w-28" />
                 <div className="pointer-events-none absolute right-0 top-[18%] h-[34%] w-[18%] bg-[linear-gradient(180deg,rgba(33,179,225,0.22),rgba(33,179,225,0))]" />
                 <div className="pointer-events-none absolute bottom-0 left-0 h-[22%] w-[34%] bg-[linear-gradient(90deg,rgba(255,255,255,0.42),rgba(255,255,255,0))]" />
 
-                <div className="relative aspect-[0.82/1] overflow-hidden bg-ambient-linen">
+                <div className="relative aspect-[0.82/1] overflow-hidden bg-black">
                   <div
                     className="pointer-events-none absolute inset-0 z-10"
                     style={{

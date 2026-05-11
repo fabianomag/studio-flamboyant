@@ -24,7 +24,7 @@ function resolveLogoVariant(value?: string | null): LogoVariant {
   return logoVariants.includes(value as LogoVariant) ? (value as LogoVariant) : "jf-original";
 }
 
-function BrandSymbol({ compact = false }: { compact?: boolean }) {
+export function BrandSymbol({ compact = false }: { compact?: boolean }) {
   return (
     <svg
       viewBox="0 0 44 44"

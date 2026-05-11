@@ -24,32 +24,30 @@ export function ProjectCard({ project, index = 0, lang = "pt" }: ProjectCardProp
 
   return (
     <Link href={withLang(`/${project.section}/${project.slug}`, lang)} className="group block">
-      <div className="relative aspect-[1.86/1] overflow-hidden bg-ambient-linen">
+      <div className="relative aspect-[4/3] overflow-hidden bg-black">
         <Image
           src={project.cover}
           alt={`${project.title} — ${project.category}`}
           fill
-          className="object-cover transition-all duration-700 ease-out group-hover:scale-[1.02]"
+          className="object-cover grayscale transition-all duration-700 ease-out group-hover:scale-[1.02] group-hover:grayscale-0"
           sizes="(max-width: 768px) 100vw, 33vw"
           loading={index < 3 ? "eager" : "lazy"}
           placeholder="blur"
           blurDataURL={getImageBlurDataURL()}
         />
-      </div>
 
-      <div className="bg-white px-7 pb-8 pt-6 md:px-8 md:pb-9 md:pt-7">
-        <h3 className="font-display text-[2.25rem] uppercase leading-[0.82] tracking-[0.04em] text-ambient-dark transition-colors group-hover:text-ambient-electric sm:text-[2.55rem]">
-          {project.title}
-        </h3>
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.78rem] uppercase tracking-[0.16em] text-ambient-muted">
-          {isNew && (
-            <span className="inline-flex bg-ambient-electric px-2 py-1 text-white">
-              {lang === "pt" ? "Novo" : "New"}
-            </span>
-          )}
-          <span>{sectionLabel}</span>
-          <span>|</span>
-          <span>{project.year}</span>
+        {/* Gradiente + título sempre visível */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7">
+          <p className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-white/60">
+            {sectionLabel}{isNew && <span className="ml-3 text-ambient-cyan">{lang === "pt" ? "Novo" : "New"}</span>}
+          </p>
+          <h3 className="mt-1 font-display text-[1.9rem] uppercase leading-[0.88] tracking-[-0.02em] text-white transition-colors duration-500 group-hover:text-ambient-cyan sm:text-[2.1rem]">
+            {project.title}
+          </h3>
+          <p className="mt-1.5 text-[0.72rem] uppercase tracking-[0.18em] text-white/45">
+            {project.year}
+          </p>
         </div>
       </div>
     </Link>

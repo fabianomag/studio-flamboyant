@@ -48,7 +48,7 @@ export function ProjectStripCarousel({
           type="button"
           aria-label={lang === "pt" ? "Anterior" : "Previous"}
           onClick={() => scrollByCard(-1)}
-          className="absolute left-0 top-0 z-20 flex h-full w-14 items-center justify-center bg-gradient-to-r from-[#d7e1e3] via-[#d7e1e3]/80 to-transparent text-[#14323d]/56 transition-colors hover:text-ambient-electric"
+          className="absolute left-0 top-0 z-20 flex h-full w-14 items-center justify-center bg-gradient-to-r from-black via-black/80 to-transparent text-white/40 transition-colors hover:text-ambient-electric"
         >
           <ChevronLeft size={26} strokeWidth={1.7} />
         </button>
@@ -59,7 +59,7 @@ export function ProjectStripCarousel({
           className="overflow-x-auto overscroll-x-contain scroll-smooth px-3 md:px-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           <div
-            className="flex w-max gap-4 pb-4"
+            className="flex w-max pb-4"
             style={{ width: "max-content" }}
           >
             {projects.map((item, index) => {
@@ -70,7 +70,7 @@ export function ProjectStripCarousel({
                   key={item.slug}
                   data-project-strip-card
                   href={withLang(`/${item.section}/${item.slug}`, lang)}
-                  className="group relative h-[13.7rem] w-[24rem] shrink-0 overflow-hidden border border-[#14323d]/14 md:h-[14.5rem] md:w-[25rem]"
+                  className="group relative h-[13.7rem] w-[24rem] shrink-0 overflow-hidden md:h-[14.5rem] md:w-[25rem]"
                   onMouseEnter={() => {
                     setHoveredIndex(index);
                   }}
@@ -108,7 +108,7 @@ export function ProjectStripCarousel({
                         {item.title}
                       </h3>
                       <span className="mt-4 inline-flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] text-ambient-micro">
-                        <span className="block h-[1px] w-8 bg-ambient-micro/60" />
+                        <span className="block h-[1px] w-8 bg-white/60" />
                         {labels.view}
                       </span>
                     </div>
@@ -124,7 +124,7 @@ export function ProjectStripCarousel({
           type="button"
           aria-label={lang === "pt" ? "Próximo" : "Next"}
           onClick={() => scrollByCard(1)}
-          className="absolute right-0 top-0 z-20 flex h-full w-14 items-center justify-center bg-gradient-to-l from-[#d7e1e3] via-[#d7e1e3]/80 to-transparent text-[#14323d]/56 transition-colors hover:text-ambient-electric"
+          className="absolute right-0 top-0 z-20 flex h-full w-14 items-center justify-center bg-gradient-to-l from-black via-black/80 to-transparent text-white/40 transition-colors hover:text-ambient-electric"
         >
           <ChevronRight size={26} strokeWidth={1.7} />
         </button>
