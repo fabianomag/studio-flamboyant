@@ -6,11 +6,12 @@ interface RevealProps {
   children: React.ReactNode;
   delay?: number;
   width?: "fit-content" | "100%";
+  clip?: boolean;
 }
 
-export function Reveal({ children, delay = 0, width = "100%" }: RevealProps) {
+export function Reveal({ children, delay = 0, width = "100%", clip = true }: RevealProps) {
   return (
-    <div style={{ width, position: "relative", overflow: "hidden" }}>
+    <div style={{ width, position: "relative", overflow: clip ? "hidden" : "visible" }}>
       <motion.div
         variants={{
           hidden: { opacity: 0, y: 30 },

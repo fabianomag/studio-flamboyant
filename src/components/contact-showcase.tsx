@@ -320,7 +320,7 @@ export function ContactShowcase({
   const isPanel = variant === "panel";
   const shellClass = isPanel
     ? "isolate relative h-full overflow-hidden bg-black text-white"
-    : "isolate relative min-h-screen overflow-hidden bg-black text-white";
+    : "isolate relative min-h-screen overflow-hidden bg-[#1a1d21] text-white";
   const overlayClass =
     "absolute inset-0 z-10 bg-[radial-gradient(circle_at_top,rgba(0,0,0,0)_0%,rgba(0,0,0,0.08)_46%,rgba(0,0,0,0.42)_100%)] lg:bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.2)_58%,rgba(0,0,0,0.58)_100%)]";
   const sectionClass = isPanel

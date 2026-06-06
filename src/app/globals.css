@@ -25,7 +25,8 @@
   }
 
   body {
-    @apply bg-black text-white;
+    background: #1a1d21;
+    @apply text-white;
     letter-spacing: 0.01em;
   }
 
@@ -33,10 +34,11 @@
     @apply bg-ambient-electric/20 text-white;
   }
   .theme {
-    --font-heading: var(--font-barlow);
-    --font-sans: var(--font-barlow);
+    --font-heading: var(--font-neue-montreal);
+    --font-sans: var(--font-neue-montreal);
   }
   :root {
+    --site-chrome-logo-col: 13rem;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -107,6 +109,24 @@
     border-color: rgba(217, 217, 217, 0.55);
     outline-color: rgba(0, 0, 255, 0.25);
   }
+
+  @media (min-width: 768px) {
+    :root {
+      --site-chrome-logo-col: 14.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --site-chrome-logo-col: clamp(28rem, calc(50vw - 12rem), 52rem);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    :root {
+      --site-chrome-logo-col: clamp(30rem, calc(50vw - 10rem), 56rem);
+    }
+  }
 }
 
 @layer components {
@@ -146,23 +166,74 @@
     background: linear-gradient(90deg, #6d7f71 0%, #b97a59 100%);
   }
 
-  .footer-bar {
+  .footer-bar,
+  .brand-wordmark-gradient-mask {
     background: linear-gradient(90deg, #0b1e25 0%, #1d4f5f 50%, #73bdd5 100%);
+  }
+
+  .brand-wordmark-gradient-mask {
+    aspect-ratio: 878 / 280;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+    -webkit-mask-image: url("/images/brand/jf-arquitetura-original.png");
+    mask-image: url("/images/brand/jf-arquitetura-original.png");
+    -webkit-mask-mode: alpha;
+    mask-mode: alpha;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
   }
 
   .quiet-serif {
     @apply font-serif text-[1.15rem] leading-[1.8] text-white/70 md:text-[1.35rem];
   }
 
+  .site-shell-padding {
+    @apply px-8 pt-5 md:px-9 md:pt-6 lg:px-12 lg:pt-7 xl:px-14 xl:pt-7 2xl:px-16;
+  }
+
+  .site-chrome-grid {
+    display: grid;
+    width: 100%;
+    column-gap: clamp(1.15rem, 2.2vw, 1.75rem);
+    grid-template-columns: var(--site-chrome-logo-col) minmax(0, 1fr) minmax(0, auto);
+  }
+
+  .site-chrome-grid--center {
+    align-items: center;
+  }
+
+  .site-chrome-grid--end {
+    align-items: end;
+  }
+
+  .site-chrome-main {
+    justify-self: start;
+    width: 100%;
+    max-width: 34rem;
+  }
+
+  .site-nav-links {
+    @apply flex flex-wrap items-center justify-start gap-x-[0.45rem] gap-y-1;
+  }
+
+  .site-nav-link {
+    @apply font-display text-[0.96rem] font-[530] uppercase leading-none tracking-[0.02em] xl:text-[1rem];
+  }
+
   .project-blueprint-surface {
-    background-color: #0a0a0a;
+    background-color: #1a1d21;
     color: #ffffff;
   }
 
   .project-blueprint-grid {
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.048) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.048) 1px, transparent 1px);
     background-size: 36px 36px, 36px 36px;
     background-position: center, center;
   }
@@ -277,7 +348,7 @@
     position: absolute;
     inset: 0;
     z-index: 2;
-    background: #ffffff;
+    background: linear-gradient(135deg, #0b1e25 0%, #1d4f5f 50%, #73bdd5 100%);
     pointer-events: none;
     transform: translateY(102%);
     transition:
@@ -291,7 +362,7 @@
     z-index: 3;
     display: grid;
     grid-template-columns: 1fr;
-    color: rgba(0, 0, 0, 0.96);
+    color: rgba(255, 255, 255, 0.96);
     pointer-events: none;
     padding: 0.24rem 0;
   }
@@ -341,7 +412,7 @@
   .contact-send-option__arrow {
     display: inline-flex;
     flex: 0 0 auto;
-    color: rgba(0, 0, 0, 0.72);
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .contact-send-option__icon {
@@ -353,7 +424,7 @@
 
   .contact-send-option__copyIcon {
     display: inline-flex;
-    color: rgba(0, 0, 0, 0.62);
+    color: rgba(255, 255, 255, 0.62);
   }
 
   .contact-send-option__label {
@@ -421,7 +492,7 @@
     .contact-send-options {
       position: relative;
       grid-template-columns: 1fr;
-      background: #ffffff;
+      background: linear-gradient(135deg, #0b1e25 0%, #1d4f5f 50%, #73bdd5 100%);
       pointer-events: auto;
       padding: 0.2rem 0 0.28rem;
     }
@@ -586,4 +657,117 @@
   mask-repeat: repeat;
   mask-position: right center;
   mask-size: 48px 42px;
+}
+
+.trefle-depth-root {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #fffaf0;
+  isolation: isolate;
+}
+
+.trefle-depth-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  z-index: 0;
+}
+
+.trefle-depth-overlay-root {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  font-family:
+    "IBM Plex Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.trefle-depth-label-overlay {
+  position: absolute;
+  inset: 0;
+  color: rgba(244, 244, 244, 0.92);
+  transition: opacity 260ms ease;
+}
+
+.trefle-depth-label-overlay__left {
+  position: absolute;
+  left: clamp(5.5rem, 7vw, 7rem);
+  top: 50%;
+  display: grid;
+  gap: 0.75rem;
+  transform: translateY(-50%);
+}
+
+.trefle-depth-label-overlay__index,
+.trefle-depth-label-card__row dt,
+.trefle-depth-label-card__value,
+.trefle-depth-label-card__word {
+  margin: 0;
+  font-size: clamp(9px, 0.72vw, 11px);
+  line-height: 1.15;
+}
+
+.trefle-depth-label-overlay__chip {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.trefle-depth-label-overlay__right {
+  position: absolute;
+  right: clamp(5.5rem, 7vw, 7rem);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.trefle-depth-label-card {
+  width: min(16vw, 240px);
+  display: grid;
+  line-height: 1.15;
+}
+
+.trefle-depth-label-card__specs {
+  margin: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.trefle-depth-label-card__row {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1rem;
+  margin: 0;
+}
+
+.trefle-depth-label-card__row dt,
+.trefle-depth-label-card__row dd {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .trefle-depth-label-overlay__left {
+    left: 1.5rem;
+    top: auto;
+    bottom: 1.5rem;
+    transform: none;
+  }
+
+  .trefle-depth-label-overlay__right {
+    right: 1.5rem;
+    top: auto;
+    bottom: 1.5rem;
+    transform: none;
+  }
+
+  .trefle-depth-label-card {
+    width: min(42vw, 220px);
+  }
 }

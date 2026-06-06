@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Barlow, Barlow_Condensed, Newsreader, Syncopate } from "next/font/google";
+import { Newsreader } from "next/font/google";
 import "leaflet/dist/leaflet.css";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
@@ -11,22 +11,7 @@ import { SmoothScroll } from "@/components/smooth-scroll";
 import { cn } from "@/lib/utils";
 import { StringTuneCursor } from "@/components/string-tune-cursor";
 import { SiteIntro } from "@/components/site-intro";
-
-const barlow = Barlow({
-  subsets: ["latin"],
-  variable: "--font-barlow",
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const barlowCondensed = Barlow_Condensed({
-  subsets: ["latin"],
-  variable: "--font-barlow-condensed",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
+import { ppNeueMontreal } from "@/lib/fonts";
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -35,13 +20,6 @@ const newsreader = Newsreader({
   style: ["normal", "italic"],
   display: "swap",
   adjustFontFallback: false,
-});
-
-const syncopate = Syncopate({
-  subsets: ["latin"],
-  variable: "--font-syncopate",
-  weight: ["400", "700"],
-  display: "swap",
 });
 
 export const metadata: Metadata = createMetadata();
@@ -54,9 +32,9 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={cn(barlow.variable, barlowCondensed.variable, newsreader.variable, syncopate.variable, "font-sans")}
+      className={cn(ppNeueMontreal.variable, newsreader.variable, "font-sans")}
     >
-      <body className="font-sans antialiased bg-black text-white selection:bg-ambient-electric/20">
+      <body className="font-sans antialiased bg-[#1a1d21] text-white selection:bg-ambient-electric/20">
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         <SiteIntro />
