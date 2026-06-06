@@ -49,14 +49,12 @@ export const typographyTokens: TypographyToken[] = [
     seoNote: "Do not use as H1 by default. It is a context label, not the main page topic.",
     currentStyle: [
       'Contact: "text-label uppercase text-ambient-canyon/55"',
-      'Studio: "text-label text-white/75"',
       'Gallery: "text-label text-ambient-muted"',
       'Home panel kicker anchor: ".home-ui-kicker" in globals.css',
     ].join(" | "),
-    currentExamples: ["Contato", "Escritorio", "Galeria", "Publicacao"],
+    currentExamples: ["Contato", "Galeria", "Publicacao"],
     currentReferences: [
       "src/components/contact-showcase.tsx",
-      "src/app/sobre/page.tsx",
       "src/app/galeria-trefle/page.tsx",
       "src/app/globals.css",
     ],
@@ -74,15 +72,14 @@ export const typographyTokens: TypographyToken[] = [
     seoNote: "Preferred H1 for standalone pages such as gallery, publications index, contact, and studio.",
     currentStyle:
       'Varies by page. Typical base is "font-display uppercase" with large scale and tight tracking.',
-    currentExamples: ["Galeria Trefle", "Publicacoes", "Contato", "Escritorio"],
+    currentExamples: ["Galeria Trefle", "Publicacoes", "Contato"],
     currentReferences: [
       "src/app/galeria-trefle/page.tsx",
       "src/app/publicacoes/page.tsx",
       "src/components/contact-showcase.tsx",
-      "src/app/sobre/page.tsx",
     ],
     notes: [
-      "In Contact and Studio, the visual hero may be different from the semantic H1.",
+      "In Contact, the visual hero may be different from the semantic H1.",
       "We may later render one visual pattern with different semantic tags depending on context.",
     ],
   },
@@ -105,7 +102,6 @@ export const typographyTokens: TypographyToken[] = [
       "src/components/contact-showcase.tsx",
       "src/app/galeria-trefle/page.tsx",
       "src/components/publications-gallery.tsx",
-      "src/app/sobre/page.tsx",
     ],
     notes: [
       "Contact is the preferred size reference for future unification.",

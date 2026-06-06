@@ -72,10 +72,10 @@ const config: Config = {
         "galeria-trefle-cover": `radial-gradient(circle at 34% 18%, rgb(${hexToRgb(galeriaTreflePalette.glow)} / 0.22) 0%, transparent 22%), linear-gradient(145deg, ${galeriaTreflePalette.terracotta} 0%, ${galeriaTreflePalette.charcoal} 52%, ${galeriaTreflePalette.wood} 100%)`,
       },
       fontFamily: {
-        sans: ["var(--font-barlow)", "system-ui", "sans-serif"],
-        display: ["var(--font-barlow-condensed)", "var(--font-barlow)", "system-ui", "sans-serif"],
+        sans: ["var(--font-neue-montreal)", "Arial", "Helvetica Neue", "sans-serif"],
+        display: ["var(--font-neue-montreal)", "Arial", "Helvetica Neue", "sans-serif"],
         serif: ["var(--font-newsreader)", "Georgia", "serif"],
-        brand: ["var(--font-syncopate)", "var(--font-barlow-condensed)", "system-ui", "sans-serif"],
+        brand: ["var(--font-neue-montreal)", "Arial", "Helvetica Neue", "sans-serif"],
       },
       fontSize: {
         "display-massive": ["8rem", { lineHeight: "0.8", letterSpacing: "-0.055em" }],
