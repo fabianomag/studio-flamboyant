@@ -1,11 +1,5 @@
-import { Barlow_Condensed } from "next/font/google";
 import { ImageResponse } from "next/og";
-
-const display = Barlow_Condensed({
-  subsets: ["latin"],
-  weight: ["900"],
-  display: "swap",
-});
+import { ppNeueMontreal } from "@/lib/fonts";
 
 export const size = {
   width: 180,
@@ -35,9 +29,9 @@ export default function AppleIcon() {
             justifyContent: "center",
             color: "#071007",
             fontSize: 102,
-            fontWeight: 900,
+            fontWeight: 650,
             letterSpacing: "-0.08em",
-            fontFamily: display.style.fontFamily,
+            fontFamily: ppNeueMontreal.style.fontFamily,
             lineHeight: 0.8,
           }}
         >
@@ -45,6 +39,6 @@ export default function AppleIcon() {
         </div>
       </div>
     ),
-    size
+    size,
   );
 }
