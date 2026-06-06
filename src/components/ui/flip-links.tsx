@@ -11,6 +11,7 @@ interface FlipLinkProps {
   textClassName?: string;
   hoverTextClassName?: string;
   staggerMs?: number;
+  lineHeight?: number;
   style?: CSSProperties;
   onClick?: () => void;
 }
@@ -22,6 +23,7 @@ export function FlipLink({
   textClassName,
   hoverTextClassName,
   staggerMs = 24,
+  lineHeight = 0.94,
   style,
   onClick,
 }: FlipLinkProps) {
@@ -40,7 +42,7 @@ export function FlipLink({
       <span
         aria-hidden="true"
         className={clsx("flex", textClassName)}
-        style={{ lineHeight: 0.78 }}
+        style={{ lineHeight }}
       >
         {letters.map((letter, index) => (
           <span
@@ -56,7 +58,7 @@ export function FlipLink({
       <span
         aria-hidden="true"
         className={clsx("pointer-events-none absolute inset-0 flex", hoverTextClassName ?? textClassName)}
-        style={{ lineHeight: 0.78 }}
+        style={{ lineHeight }}
       >
         {letters.map((letter, index) => (
           <span

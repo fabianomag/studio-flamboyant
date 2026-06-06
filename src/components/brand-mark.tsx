@@ -26,6 +26,12 @@ interface BrandHeaderSymbolProps {
   className?: string;
 }
 
+interface BrandHeaderWordmarkProps {
+  inverted?: boolean;
+  lang?: Lang;
+  className?: string;
+}
+
 function resolveLogoVariant(value?: string | null): LogoVariant {
   return logoVariants.includes(value as LogoVariant) ? (value as LogoVariant) : "jf-original";
 }
@@ -304,6 +310,38 @@ export function BrandHeaderSymbol({ inverted = false, lang = "pt", className }: 
             ? "brightness-0 invert drop-shadow-[0_0_12px_rgba(255,255,255,0.18)]"
             : "brightness-0",
           className
+        )}
+      />
+    </Link>
+  );
+}
+
+export function BrandHeaderWordmark({ inverted = false, lang = "pt", className }: BrandHeaderWordmarkProps) {
+  const pathname = usePathname();
+
+  return (
+    <Link
+      href={withLang("/", lang)}
+      onClick={() => {
+        if (pathname !== "/") {
+          setPendingRouteShellTransition("home-enter");
+        }
+      }}
+      aria-label="Julia Fonseca Arquitetura"
+      className="inline-flex items-center justify-center transition-opacity hover:opacity-70"
+    >
+      <Image
+        src="/images/brand/intro-assets/jf-arquitetura-original-2x.png"
+        alt="Julia Fonseca Arquitetura"
+        width={878}
+        height={280}
+        priority
+        className={clsx(
+          "h-auto w-[13rem] md:w-[14.75rem] lg:w-[16.5rem] xl:w-[17.5rem]",
+          inverted
+            ? "brightness-0 invert drop-shadow-[0_0_12px_rgba(255,255,255,0.14)]"
+            : "brightness-0",
+          className,
         )}
       />
     </Link>
