@@ -22,12 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/escritorio`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
       url: `${baseUrl}/publicacoes`,
       lastModified: now,
       changeFrequency: "monthly",
