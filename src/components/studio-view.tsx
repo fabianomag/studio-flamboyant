@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Locale, LocalizedSiteContent } from "@/content/site";
 
 export function StudioView({
@@ -11,74 +11,27 @@ export function StudioView({
   copy: LocalizedSiteContent["studio"];
   locale: Locale;
 }) {
-  const mediaRef = useRef<HTMLElement>(null);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const media = mediaRef.current;
-    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!media || motionPreference.matches || paused) return;
-
-    let frame = 0;
-    let lastTime = performance.now();
-    let interactingUntil = 0;
-    let position = media.scrollTop;
-
-    const pauseForInteraction = () => {
-      interactingUntil = performance.now() + 1800;
-      position = media.scrollTop;
-      window.requestAnimationFrame(() => {
-        position = media.scrollTop;
-      });
-    };
-
-    const tick = (time: number) => {
-      const delta = Math.min(time - lastTime, 50);
-      lastTime = time;
-
-      if (time > interactingUntil) {
-        position += (delta / 1000) * 18;
-        const loopHeight = media.scrollHeight / 2;
-        if (loopHeight > 0 && position >= loopHeight) {
-          position -= loopHeight;
-        }
-        media.scrollTop = position;
-      }
-
-      frame = window.requestAnimationFrame(tick);
-    };
-
-    media.addEventListener("wheel", pauseForInteraction, { passive: true });
-    media.addEventListener("pointerdown", pauseForInteraction, { passive: true });
-    media.addEventListener("touchstart", pauseForInteraction, { passive: true });
-    media.addEventListener("touchmove", pauseForInteraction, { passive: true });
-    media.addEventListener("keydown", pauseForInteraction);
-    media.addEventListener("focusin", pauseForInteraction);
-    frame = window.requestAnimationFrame(tick);
-
+    document.body.classList.add("studio-viewport");
     return () => {
-      window.cancelAnimationFrame(frame);
-      media.removeEventListener("wheel", pauseForInteraction);
-      media.removeEventListener("pointerdown", pauseForInteraction);
-      media.removeEventListener("touchstart", pauseForInteraction);
-      media.removeEventListener("touchmove", pauseForInteraction);
-      media.removeEventListener("keydown", pauseForInteraction);
-      media.removeEventListener("focusin", pauseForInteraction);
+      document.body.classList.remove("studio-viewport");
     };
-  }, [paused]);
+  }, []);
 
   const loopedMedia = [...copy.media, ...copy.media];
+  const mediaControlLabel = paused
+    ? locale === "pt" ? "Continuar imagens" : "Resume images"
+    : locale === "pt" ? "Pausar imagens" : "Pause images";
 
   return (
     <article className="studio-page">
       <aside
-        ref={mediaRef}
         className="studio-media"
         aria-label={locale === "pt" ? "Imagens do escritório" : "Studio images"}
-        data-lenis-prevent
-        tabIndex={0}
       >
-        <div className="studio-media__track">
+        <div className="studio-media__track" data-paused={paused}>
           {loopedMedia.map((media, index) => {
             const duplicate = index >= copy.media.length;
             const leadImage = index % copy.media.length === 0;
@@ -104,25 +57,23 @@ export function StudioView({
       <button
         className="studio-media__control"
         type="button"
+        data-paused={paused}
         aria-pressed={paused}
+        aria-label={mediaControlLabel}
         onClick={() => setPaused((value) => !value)}
       >
-        {paused
-          ? locale === "pt" ? "Continuar imagens" : "Resume images"
-          : locale === "pt" ? "Pausar imagens" : "Pause images"}
+        <i aria-hidden="true" />
       </button>
 
       <section
         className="studio-copy"
         aria-label={locale === "pt" ? "Sobre o escritório" : "About the studio"}
-        data-lenis-prevent
-        tabIndex={0}
       >
         <div className="studio-copy__inner">
           <p className="eyebrow">{copy.eyebrow}</p>
           <h1>{copy.title}</h1>
           <div className="studio-manifesto">
-            {copy.manifesto.slice(0, 2).map((paragraph) => (
+            {copy.manifesto.slice(0, 1).map((paragraph) => (
               <p key={paragraph}>
                 {paragraph}
               </p>

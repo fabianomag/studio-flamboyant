@@ -621,25 +621,24 @@ export const siteContent = {
       eyebrow: "Studio Flamboyant",
       title: "Restraint, lit from within.",
       manifesto: [
-        "We work with broad planes, deep shade and carefully placed openings. Each study begins with what can be removed, then asks light and proportion to carry the atmosphere.",
-        "The name comes from the flamboyant tree—familiar across Brazil and northern Minas Gerais, generous in shade and suddenly flame-coloured. That tension between calm structure and vivid presence guides the visual language.",
+        "We shape broad planes, deep shade and precise openings, removing until light and proportion carry the atmosphere.",
       ],
       principlesLabel: "Working principles",
       principles: [
         {
           number: "01",
           title: "Restraint with intent",
-          body: "Remove until every remaining line, surface and interaction has a clear role.",
+          body: "Every remaining line has a clear role.",
         },
         {
           number: "02",
           title: "Atmosphere through light",
-          body: "Treat shadow and reflection as spatial material, not decoration.",
+          body: "Shadow and reflection become spatial material.",
         },
         {
           number: "03",
           title: "Continuity across scales",
-          body: "Carry the same rhythm from a building edge to a line of type and a transition on screen.",
+          body: "One rhythm connects structure, type and motion.",
         },
       ],
       media: [
@@ -825,25 +824,24 @@ export const siteContent = {
       eyebrow: "Studio Flamboyant",
       title: "Contenção, acesa por dentro.",
       manifesto: [
-        "Trabalhamos com planos amplos, sombra profunda e aberturas precisas. Cada estudo começa pelo que pode ser removido e deixa que luz e proporção sustentem a atmosfera.",
-        "O nome vem do flamboyant — árvore familiar no Brasil e no Norte de Minas, generosa em sombra e subitamente acesa como chama. Essa tensão entre estrutura calma e presença viva conduz a linguagem visual.",
+        "Trabalhamos com planos amplos, sombra profunda e aberturas precisas, removendo até que luz e proporção sustentem a atmosfera.",
       ],
       principlesLabel: "Princípios de trabalho",
       principles: [
         {
           number: "01",
           title: "Contenção com intenção",
-          body: "Remover até que cada linha, superfície e interação restante tenha uma função clara.",
+          body: "Cada linha restante tem uma função clara.",
         },
         {
           number: "02",
           title: "Atmosfera pela luz",
-          body: "Tratar sombra e reflexo como matéria espacial, não como decoração.",
+          body: "Sombra e reflexo tornam-se matéria espacial.",
         },
         {
           number: "03",
           title: "Continuidade entre escalas",
-          body: "Levar o mesmo ritmo da borda de um edifício à linha tipográfica e à transição na tela.",
+          body: "Um ritmo conecta estrutura, tipografia e movimento.",
         },
       ],
       media: [

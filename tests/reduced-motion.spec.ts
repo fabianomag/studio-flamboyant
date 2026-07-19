@@ -18,8 +18,8 @@ for (const path of ["/", "/projects/horizon-pavilion", "/studio", "/contact"] as
       () => document.documentElement.scrollHeight > window.innerHeight,
     );
     if (canScroll) {
-      await page.mouse.wheel(
-        0,
+      await page.evaluate(
+        (distance) => window.scrollBy(0, distance),
         Math.max(600, await page.evaluate(() => innerHeight)),
       );
       await expect
@@ -29,13 +29,14 @@ for (const path of ["/", "/projects/horizon-pavilion", "/studio", "/contact"] as
 
     if (path === "/studio") {
       await expect(page.locator(".studio-media__control")).toBeHidden();
-      const start = await page.locator(".studio-media").evaluate(
-        (element) => element.scrollTop,
+      await expect(page.locator(".studio-media__track")).toHaveCSS(
+        "animation-name",
+        "none",
       );
-      await page.waitForTimeout(250);
-      expect(
-        await page.locator(".studio-media").evaluate((element) => element.scrollTop),
-      ).toBe(start);
+      await expect(page.locator(".studio-media__track")).toHaveCSS(
+        "transform",
+        "none",
+      );
     }
 
     expect(runtimeErrors, `Runtime errors on ${path}`).toEqual([]);
