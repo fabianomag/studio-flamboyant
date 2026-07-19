@@ -5,6 +5,8 @@
 
 # testing
 /coverage
+/playwright-report/
+/test-results/
 
 # next.js
 /.next/
@@ -38,7 +40,7 @@ ESTRATEGIA-CONTEUDO-DRAFT.md
 # local managed-service intake
 /_incoming/
 
-# imagens originais — ficam só na máquina, nunca vão pro git
+# local source images — never shipped
 /scraped-images/
 /_originals/
 mockups/

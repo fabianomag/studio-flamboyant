@@ -12,25 +12,21 @@ Leia antes de alterar identidade, rotas, conteúdo, motion, imagens ou SEO.
 
 ## Tese ativa
 
-Este repositório está sendo convertido de um site de cliente em um case público
-de frontend sênior para um estúdio de arquitetura conceitual.
-
-- `julia` preserva o site anterior.
-- `dev` é a linha de reconstrução.
-- `main` recebe o novo site somente depois da validação final.
+Este repositório contém um case público de frontend sênior para um estúdio de
+arquitetura conceitual. A arquitetura é fictícia e não construída; o design e a
+engenharia digital são trabalho real de Fabiano Frank.
 
 ## Regras
 
-- Não restaurar nome, marca, contatos, textos ou projetos de Julia em `dev`.
-- Remover `publicacoes` de rotas, navegação, sitemap e metadata.
-- Preservar e elevar os melhores sistemas atuais; não reconstruir por esporte.
+- Manter identidade, conteúdo, rotas e assets inteiramente próprios do case.
+- Preservar e elevar os sistemas existentes quando forem coerentes com o case.
 - Tratar referências como direção, nunca como autorização para copiar conteúdo.
 - Usar imagens somente quando a licença estiver registrada.
 - Manter o efeito de máscara da home baseado no demo MIT do Codrops/Hiroki.
 - Priorizar acessibilidade, responsividade, SEO técnico, performance e motion com
   fallback para `prefers-reduced-motion`.
-- Não publicar nem fazer merge em `main` sem build, revisão visual e auditoria
-  do conteúdo residual da cliente.
+- Não publicar nem fazer merge em `main` sem build, revisão visual, auditoria
+  de conteúdo e destino público neutro.
 
 ## Fonte da verdade
 
