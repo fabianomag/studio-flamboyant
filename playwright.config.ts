@@ -37,6 +37,11 @@ export default defineConfig({
       testMatch: focusedViewportTests,
       use: { ...devices["iPad Pro 11"], browserName: "chromium" },
     },
+    {
+      name: "webkit-mobile",
+      testMatch: focusedViewportTests,
+      use: { ...devices["iPhone 13"], browserName: "webkit" },
+    },
   ],
   webServer: {
     command: productionRun

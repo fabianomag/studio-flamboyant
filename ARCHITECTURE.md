@@ -63,10 +63,10 @@ mantêm o fechamento institucional.
   percorre `feature-left`, `feature-right` e `triptych`, com razões 1.72/0.88 e
   o espaçamento assimétrico preservado.
 - A página de escritório ocupa uma única viewport. No desktop, trilho de mídia e
-  texto formam um 50/50 com rolagens internas; no mobile, a mídia preenche o
-  fundo e o texto ocupa um cartão branco inset de 50svh. O loop visual tem pausa
-  persistente, pausa durante interação, região rolável por teclado e fallback de
-  movimento reduzido.
+  texto formam um 50/50 sem rolagens internas; no mobile, a mídia preenche o
+  fundo e o texto ocupa um cartão branco inset de 50dvh. O loop visual usa
+  `translate3d` linear no compositor, oferece controle compacto de pausa e fica
+  estático sob movimento reduzido.
 - No desktop, a navegação começa com wordmark, links centrais e pílula Contato;
   ao rolar, esses elementos cedem lugar à pílula Menu no canto direito. No
   mobile, Menu já é o estado inicial. O overlay preserva ciclo de foco,

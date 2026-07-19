@@ -53,30 +53,47 @@ export function HomeExperience({
   const maskPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const [grid, setGrid] = useState<Grid>(initialGrid);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [coarsePointer, setCoarsePointer] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
+  const activeSlideRef = useRef(0);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotion = () => setReducedMotion(media.matches);
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pointerPreference = window.matchMedia("(pointer: coarse)");
+    const updatePreferences = () => {
+      setReducedMotion(motionPreference.matches);
+      setCoarsePointer(pointerPreference.matches);
+    };
     let timer = 0;
+    let measuredWidth = window.innerWidth;
     const updateGrid = () => {
+      const nextWidth = window.innerWidth;
+      if (Math.abs(nextWidth - measuredWidth) < 2) return;
+      measuredWidth = nextWidth;
       window.clearTimeout(timer);
       timer = window.setTimeout(() => setGrid(getGrid()), 250);
     };
 
     const initialFrame = window.requestAnimationFrame(() => {
-      updateMotion();
+      updatePreferences();
       setGrid(getGrid());
     });
-    media.addEventListener("change", updateMotion);
+    motionPreference.addEventListener("change", updatePreferences);
+    pointerPreference.addEventListener("change", updatePreferences);
     window.addEventListener("resize", updateGrid);
 
     return () => {
       window.clearTimeout(timer);
       window.cancelAnimationFrame(initialFrame);
-      media.removeEventListener("change", updateMotion);
+      motionPreference.removeEventListener("change", updatePreferences);
+      pointerPreference.removeEventListener("change", updatePreferences);
       window.removeEventListener("resize", updateGrid);
     };
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.add("home-immersive");
+    return () => document.body.classList.remove("home-immersive");
   }, []);
 
   useLayoutEffect(() => {
@@ -100,14 +117,14 @@ export function HomeExperience({
           y: 0,
         });
       }
-      gsap.set(fills, { width: "0%" });
+      gsap.set(fills, { scaleX: 0, transformOrigin: "left center" });
 
       const master = gsap.timeline({
         scrollTrigger: {
           trigger: stage,
           start: "top top",
           end: "bottom bottom",
-          scrub: 2.5,
+          scrub: coarsePointer ? 0.2 : 2.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -180,16 +197,21 @@ export function HomeExperience({
         end: "bottom bottom",
         scrub: 0.3,
         onUpdate: ({ progress }) => {
-          setActiveSlide(
-            Math.min(projects.length - 1, Math.floor(progress * projects.length)),
+          const nextSlide = Math.min(
+            projects.length - 1,
+            Math.floor(progress * projects.length),
           );
+          if (activeSlideRef.current !== nextSlide) {
+            activeSlideRef.current = nextSlide;
+            setActiveSlide(nextSlide);
+          }
           fills.forEach((fill, index) => {
             const segmentProgress = gsap.utils.clamp(
               0,
               1,
               (progress - index / fills.length) * fills.length,
             );
-            fill.style.width = `${segmentProgress * 100}%`;
+            fill.style.transform = `scaleX(${segmentProgress})`;
           });
         },
       });
@@ -201,7 +223,7 @@ export function HomeExperience({
 
     ScrollTrigger.refresh();
     return () => context.revert();
-  }, [grid, projects, reducedMotion]);
+  }, [coarsePointer, grid, projects, reducedMotion]);
 
   const cells = useMemo(
     () =>
