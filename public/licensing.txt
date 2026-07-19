@@ -1,0 +1,17 @@
+# Studio Flamboyant — licensing
+
+Copyright © 2026 Fabiano Magalhães. All rights reserved.
+
+Studio Flamboyant is source-available portfolio software. It is not open source.
+
+No permission is granted to use, copy, modify, distribute, sublicense, sell, deploy or create derivative works from the original materials, in whole or in part, for commercial or non-commercial purposes.
+
+Public access is provided only for portfolio review, technical evaluation and discussion. Viewing and forking through GitHub remain subject to GitHub's Terms of Service.
+
+Third-party components remain governed by their respective licenses. Their notices are available at:
+https://github.com/fabianomag/studio-flamboyant/blob/main/THIRD_PARTY_NOTICES.md
+
+Commercial licensing may be available only through a separate written agreement.
+
+Contact: https://www.linkedin.com/in/fabianomag/
+Full repository terms: https://github.com/fabianomag/studio-flamboyant/blob/main/LICENSE.md

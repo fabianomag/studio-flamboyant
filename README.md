@@ -16,6 +16,10 @@ accessibility, crawlability, performance or operational safety.
 > The studio and architecture are fictional and unbuilt. The product design,
 > frontend implementation and verification are real.
 
+> **Source available for portfolio review. This is not open-source software.**
+> Commercial or non-commercial reuse, in whole or in part, requires a separate
+> written license. See [LICENSE.md](./LICENSE.md).
+
 ## Why this project matters
 
 - **Design engineering:** a distinctive editorial direction became a reusable
