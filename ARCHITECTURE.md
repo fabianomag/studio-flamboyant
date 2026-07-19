@@ -5,7 +5,7 @@
 Studio Flamboyant é um case público de frontend apresentado como experiência de
 um escritório de arquitetura conceitual. A arquitetura, a marca e os três
 projetos são fictícios e não construídos; o trabalho de design e engenharia do
-site é real e creditado a Fabiano Frank.
+site é real e creditado a Fabiano Magalhães.
 
 O produto não capta clientes de arquitetura. O fechamento comercial leva a um
 formulário para sites, sistemas frontend e produtos digitais.
@@ -189,6 +189,6 @@ afirmadas depois do deploy.
 - a branch de publicação recebe o case somente depois de configuração do
   ambiente, verificação no Vercel e aprovação explícita;
 - repositório, projeto Vercel e domínio públicos precisam ser neutros e próprios
-  do Studio Flamboyant/Fabiano Frank.
+  do Studio Flamboyant/Fabiano Magalhães.
 
 As únicas pendências operacionais ficam em `NEXT.md`.

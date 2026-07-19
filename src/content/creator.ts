@@ -1,5 +1,5 @@
 export const creator = {
-  name: "Fabiano Frank",
+  name: "Fabiano Magalhães",
   alternateName: "Fabiano Mag",
   handle: "@fabianomag",
   linkedin: "https://www.linkedin.com/in/fabianomag/",

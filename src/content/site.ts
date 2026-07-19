@@ -558,7 +558,7 @@ export const siteContent = {
       name: "Studio Flamboyant",
       tagline: "Light, landscape and measured form.",
       disclosure:
-        "Studio Flamboyant is a fictional architecture practice created as a design and frontend case by Fabiano Frank.",
+        "Studio Flamboyant is a fictional architecture practice created as a design and frontend case by Fabiano Magalhães.",
     },
     global: {
       skipToContent: "Skip to content",
@@ -664,7 +664,7 @@ export const siteContent = {
       seo: {
         title: "Contact — Studio Flamboyant",
         description:
-          "Contact Fabiano Frank about a design-led website, frontend experience or digital product—not an architecture commission.",
+          "Contact Fabiano Magalhães about a design-led website, frontend experience or digital product—not an architecture commission.",
       },
       title: "Want a site with this level of care?",
       form: {
@@ -702,7 +702,7 @@ export const siteContent = {
       title: "Privacy",
       updated: "Last updated 19 July 2026",
       intro:
-        "Fabiano Frank is responsible for the information processed through this portfolio case. The site collects only what is needed to reply to a project enquiry, understand aggregate performance and remember a language choice.",
+        "Fabiano Magalhães is responsible for the information processed through this portfolio case. The site collects only what is needed to reply to a project enquiry, understand aggregate performance and remember a language choice.",
       sections: [
         {
           title: "Information you submit",
@@ -735,7 +735,7 @@ export const siteContent = {
         {
           title: "Your request",
           paragraphs: [
-            "Fabiano Frank is the contact for privacy requests. To ask about access, correction, withdrawal of consent or deletion of information sent through the form, use the contact page and include enough context to identify the original enquiry without resending sensitive data.",
+            "Fabiano Magalhães is the contact for privacy requests. To ask about access, correction, withdrawal of consent or deletion of information sent through the form, use the contact page and include enough context to identify the original enquiry without resending sensitive data.",
           ],
         },
       ],
@@ -758,7 +758,7 @@ export const siteContent = {
       name: "Studio Flamboyant",
       tagline: "Luz, paisagem e forma medida.",
       disclosure:
-        "Studio Flamboyant é um escritório de arquitetura fictício criado como case de design e frontend por Fabiano Frank.",
+        "Studio Flamboyant é um escritório de arquitetura fictício criado como case de design e frontend por Fabiano Magalhães.",
     },
     global: {
       skipToContent: "Ir para o conteúdo",
@@ -868,7 +868,7 @@ export const siteContent = {
       seo: {
         title: "Contato — Studio Flamboyant",
         description:
-          "Fale com Fabiano Frank sobre um site de direção autoral, uma experiência frontend ou um produto digital — não sobre um projeto de arquitetura.",
+          "Fale com Fabiano Magalhães sobre um site de direção autoral, uma experiência frontend ou um produto digital — não sobre um projeto de arquitetura.",
       },
       title: "Quer um site com este nível de cuidado?",
       form: {
@@ -906,7 +906,7 @@ export const siteContent = {
       title: "Privacidade",
       updated: "Última atualização em 19 de julho de 2026",
       intro:
-        "Fabiano Frank é o responsável pelas informações processadas por este case de portfólio. O site coleta apenas o necessário para responder a uma solicitação de projeto, entender a performance agregada e lembrar uma escolha de idioma.",
+        "Fabiano Magalhães é o responsável pelas informações processadas por este case de portfólio. O site coleta apenas o necessário para responder a uma solicitação de projeto, entender a performance agregada e lembrar uma escolha de idioma.",
       sections: [
         {
           title: "Dados enviados por você",
@@ -939,7 +939,7 @@ export const siteContent = {
         {
           title: "Sua solicitação",
           paragraphs: [
-            "Fabiano Frank é o contato para assuntos de privacidade. Para pedir acesso, correção, retirada do consentimento ou exclusão de informações enviadas pelo formulário, use a página de contato e inclua informação suficiente para identificar a solicitação original, sem reenviar dados sensíveis.",
+            "Fabiano Magalhães é o contato para assuntos de privacidade. Para pedir acesso, correção, retirada do consentimento ou exclusão de informações enviadas pelo formulário, use a página de contato e inclua informação suficiente para identificar a solicitação original, sem reenviar dados sensíveis.",
           ],
         },
       ],

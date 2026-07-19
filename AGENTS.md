@@ -14,7 +14,7 @@ Leia antes de alterar identidade, rotas, conteúdo, motion, imagens ou SEO.
 
 Este repositório contém um case público de frontend sênior para um estúdio de
 arquitetura conceitual. A arquitetura é fictícia e não construída; o design e a
-engenharia digital são trabalho real de Fabiano Frank.
+engenharia digital são trabalho real de Fabiano Magalhães.
 
 ## Regras
 

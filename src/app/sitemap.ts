@@ -57,8 +57,17 @@ function toEntry(pair: RoutePair, pathname: string): MetadataRoute.Sitemap[numbe
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routePairs.flatMap((pair) => [
+  const localizedRoutes = routePairs.flatMap((pair) => [
     toEntry(pair, pair.en),
     toEntry(pair, pair.pt),
   ]);
+
+  return [
+    ...localizedRoutes,
+    ...["/llms.txt", "/sitemap.md", "/case-study.md"].map((pathname) => ({
+      url: absoluteUrl(pathname),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    })),
+  ];
 }

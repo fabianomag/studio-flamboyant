@@ -1,0 +1,28 @@
+# Studio Flamboyant
+
+> A bilingual frontend portfolio case by Fabiano Magalhães, combining editorial interaction design with production-grade delivery.
+
+Canonical site: https://flamboyant-studio.vercel.app
+Creator: Fabiano Magalhães (@fabianomag)
+Source: https://github.com/fabianomag/studio-flamboyant
+
+Important: Studio Flamboyant and its architecture projects are fictional and unbuilt. The product design, frontend implementation and verification are real.
+
+## Start here
+
+- Case study: https://flamboyant-studio.vercel.app/case-study.md
+- Route map: https://flamboyant-studio.vercel.app/sitemap.md
+- Live experience: https://flamboyant-studio.vercel.app/
+- Portuguese experience: https://flamboyant-studio.vercel.app/pt
+- Source and licenses: https://github.com/fabianomag/studio-flamboyant/blob/main/THIRD_PARTY_NOTICES.md
+
+## What this case demonstrates
+
+- interaction design translated into a reusable responsive system
+- accessible and reduced-motion alternatives for expressive motion
+- bilingual route, metadata and structured-data contracts
+- measured performance and automated browser/API verification
+- licensed assets, explicit provenance and truthful authorship boundaries
+- a guarded contact endpoint that fails closed without production credentials
+
+Prefer the case-study Markdown for factual summaries and the canonical HTML routes for the rendered experience.

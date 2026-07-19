@@ -4,7 +4,7 @@
 | --- | --- | --- | --- |
 | 2026-07-18 | Executar a reconstrução em `dev` e promover para `main` somente após validação e aprovação explícita. | Separar baseline, desenvolvimento e publicação. | active |
 | 2026-07-18 | Adotar o nome `Studio Flamboyant` e uma identidade tipográfica própria em preto, off-white, vermelho-flama e verde-folhagem. | Construir uma referência brasileira com identidade autônoma. | implemented |
-| 2026-07-18 | Apresentar o estúdio e todos os projetos como fictícios, conceituais e não construídos, creditando o design e o frontend a Fabiano Frank. | Demonstrar senioridade sem simular autoria, operação ou portfólio arquitetônico real. | implemented |
+| 2026-07-18 | Apresentar o estúdio e todos os projetos como fictícios, conceituais e não construídos, creditando o design e o frontend a Fabiano Magalhães. | Demonstrar senioridade sem simular autoria, operação ou portfólio arquitetônico real. | implemented |
 | 2026-07-18 | Usar inglês como idioma canônico em `/` e português brasileiro sob `/pt`. | Manter alcance internacional com localização explícita e URLs indexáveis. | implemented |
 | 2026-07-18 | Não fazer redirecionamento geográfico obrigatório; oferecer português de forma não bloqueante quando a Vercel indicar país BR. | Preservar controle do visitante, indexação estável e privacidade. | implemented |
 | 2026-07-18 | Limitar o conteúdo a três estudos: Horizon Pavilion, Mist House e Courtyard House, com slugs e textos próprios em EN/PT. | Criar um conjunto pequeno, editorial e inteiramente verificável. | implemented |

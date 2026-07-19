@@ -65,10 +65,33 @@ test("creator credit links verified profiles and keeps identity data on the Pers
 
   expect(websiteSchema?.creator).toMatchObject({
     "@type": "Person",
+    name: "Fabiano Magalhães",
     alternateName: ["Fabiano Mag", "@fabianomag"],
     sameAs: [
       "https://www.linkedin.com/in/fabianomag/",
       "https://github.com/fabianomag",
     ],
   });
+});
+
+test("agent-readable case artifacts form a recoverable public chain", async ({
+  request,
+}) => {
+  const llms = await request.get("/llms.txt");
+  const readableSitemap = await request.get("/sitemap.md");
+  const caseStudy = await request.get("/case-study.md");
+  const xmlSitemap = await request.get("/sitemap.xml");
+
+  expect(llms.status()).toBe(200);
+  expect(await llms.text()).toContain(
+    "https://flamboyant-studio.vercel.app/case-study.md",
+  );
+  expect(readableSitemap.status()).toBe(200);
+  expect(await readableSitemap.text()).toContain(
+    "https://github.com/fabianomag/studio-flamboyant",
+  );
+  expect(caseStudy.status()).toBe(200);
+  expect(await caseStudy.text()).toContain("Fabiano Magalhães");
+  expect(xmlSitemap.status()).toBe(200);
+  expect(await xmlSitemap.text()).toContain("/case-study.md");
 });
